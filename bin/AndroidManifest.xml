@@ -1,0 +1,31 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.ak.wifissidwidget"
+    android:versionCode="7"
+    android:versionName="0.1" >
+
+    <uses-sdk
+        android:minSdkVersion="8"
+        android:targetSdkVersion="17" />
+    
+	<uses-permission 
+	    android:name="android.permission.ACCESS_WIFI_STATE">
+	</uses-permission>       
+
+    <application
+        android:allowBackup="true"
+        android:icon="@drawable/ic_launcher"
+        android:label="@string/app_name"
+        android:theme="@style/AppTheme" >
+
+
+    <!--  Broadcast Receiver -->
+    <receiver android:name=".WifiSSIDWidget" android:label="@string/app_name">
+        <intent-filter> 
+            <action android:name="android.appwidget.action.APPWIDGET_UPDATE"/> 
+        </intent-filter>
+        <meta-data android:name="android.appwidget.provider" android:resource="@xml/wifi_ssid_widget_provider" />
+    </receiver>           
+        
+    </application>
+
+</manifest>
