@@ -7,10 +7,12 @@ import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
 import android.content.ComponentName;
 import android.content.Context;
+import android.content.Intent;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 import android.util.Log;
 import android.widget.RemoteViews;
+import android.app.PendingIntent;
 
 /* TODO:
  * 	- two row layout
@@ -28,6 +30,7 @@ import android.widget.RemoteViews;
 
 public class WifiSSIDWidget extends AppWidgetProvider {
 	private static final String TAG = "WifiSSIDWidget";
+	public static final String ACTION_BUTTON1_CLICKED = "com.example.myapp.BUTTON1_CLICKED";
 	
 	@Override
 	public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
@@ -35,6 +38,10 @@ public class WifiSSIDWidget extends AppWidgetProvider {
 		Timer timer = new Timer();
 		timer.scheduleAtFixedRate(new MySSIDDisplay(context, appWidgetManager), 1, 1000);
 		Log.v(TAG, "onUpdate()");
+		Intent intent = new Intent(ACTION_BUTTON1_CLICKED);
+		PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0, intent, 0);
+		remoteViews.setOnClickPendingIntent(R.id.widget_textview, pendingIntent);		
+		
 	}
 	
 	private class MySSIDDisplay extends TimerTask {
