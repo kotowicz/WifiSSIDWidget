@@ -34,6 +34,7 @@ import android.app.PendingIntent;
  *  - for icon generation see also: http://makeappicon.com/
  *  - smaller default size
  *  - allow resizing on android 3.0+  
+ *  - forbid sd-card installation.
  */
 
 
