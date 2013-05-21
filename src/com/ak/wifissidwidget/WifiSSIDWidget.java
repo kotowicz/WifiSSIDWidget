@@ -31,7 +31,9 @@ import android.app.PendingIntent;
  *  - use string resources instead of hard coded strings. 
  *  - replace icon (widget) - see:
  *  http://android-ui-utils.googlecode.com/hg/asset-studio/dist/icons-launcher.html#foreground.type=image&foreground.space.trim=1&foreground.space.pad=0.15&foreColor=fff%2C100&crop=0&backgroundShape=none&backColor=fff%2C100
- *  - for icon generation see also: http://makeappicon.com/  
+ *  - for icon generation see also: http://makeappicon.com/
+ *  - smaller default size
+ *  - allow resizing on android 3.0+  
  */
 
 
@@ -90,7 +92,6 @@ public class WifiSSIDWidget extends AppWidgetProvider {
 		@Override
 		public void run() {
 			
-			//String no_ssid = "<unknown ssid>";
 			String no_ssid = context.getString(R.string.no_ssid);
 			String ssid = "";
 			
