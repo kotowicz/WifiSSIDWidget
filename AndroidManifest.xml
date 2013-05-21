@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.ak.wifissidwidget"
-    android:versionCode="8"
-    android:versionName="0.11" >
+    android:versionCode="9"
+    android:versionName="0.12" >
 
     <uses-sdk
         android:minSdkVersion="8"
@@ -22,7 +22,7 @@
     <receiver android:name=".WifiSSIDWidget" android:label="@string/app_name">
         <intent-filter> 
             <action android:name="android.appwidget.action.APPWIDGET_UPDATE"/> 
-            <action android:name="com.ak.wifissidwidget.BUTTON1_CLICKED" />
+            <action android:name="com.ak.wifissidwidget.BUTTON1_CLICKED"/>
         </intent-filter>
         <meta-data android:name="android.appwidget.provider" android:resource="@xml/wifi_ssid_widget_provider" />
     </receiver>           

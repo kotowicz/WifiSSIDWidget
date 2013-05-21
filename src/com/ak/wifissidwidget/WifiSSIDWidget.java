@@ -15,9 +15,7 @@ import android.widget.RemoteViews;
 import android.app.PendingIntent;
 
 /* TODO:
- * 	- two row layout
  *  - listen to WIFI state changes and update string only then
- *  - create activity if widget is clicked -> go to Wifi settings
  *  - fix all warnings
  *  - better icon
  *  
@@ -25,6 +23,9 @@ import android.app.PendingIntent;
  *  - remove "" from SSID string on some android versions
  *  - create icon
  *  - fix background
+ *  - create activity if widget is clicked -> go to Wifi settings
+ *  - two row layout
+ *  - check if 'unknown ssid' is found and replace with 'no connection'  
  */
 
 
@@ -49,17 +50,19 @@ public class WifiSSIDWidget extends AppWidgetProvider {
 
 		if (ACTION_BUTTON1_CLICKED.equals(intent.getAction()))
 		{
-			Log.d(TAG, "onReceive() - button clicked");
+			// Log.d(TAG, "onReceive() - button clicked");
 			openWifiSettings(context);
 		}	
 	}
 
 	public void openWifiSettings(Context context) {
 		final Intent intent = new Intent(Intent.ACTION_MAIN, null);
-		intent.addCategory(Intent.CATEGORY_LAUNCHER);
 		final ComponentName cn = new ComponentName("com.android.settings", "com.android.settings.wifi.WifiSettings");
+		
+		intent.addCategory(Intent.CATEGORY_LAUNCHER);
 		intent.setComponent(cn);
 		intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+		
 		context.startActivity(intent);
 	}   	
 
@@ -85,13 +88,15 @@ public class WifiSSIDWidget extends AppWidgetProvider {
 		public void run() {
 			WifiInfo wifiInfo = this.wifiManager.getConnectionInfo();	
 			String ssid = wifiInfo.getSSID();
-
 			// remove starting and ending '"' characters (if present)
 			ssid = ssid.replaceAll("^\"|\"$", "");
-			// Log.v(TAG, ssid);
+			
+			// look for the 'no_ssid' string inside the 'ssid' string. DO not use '!=' for string comparison.
+			String no_ssid = "<unknown ssid>";
+			boolean contains = ssid.contains(no_ssid);
 
 			String text_to_show = "No connection";
-			if ((ssid != null) && (ssid != "<unknown ssid>")) { 
+			if ((ssid != null) && (contains == false)) {
 				text_to_show = ssid;
 			}
 			remoteViews.setTextViewText(R.id.widget_textview, text_to_show);
