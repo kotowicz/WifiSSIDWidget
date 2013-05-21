@@ -35,6 +35,7 @@ import android.app.PendingIntent;
  *  - smaller default size
  *  - allow resizing on android 3.0+  
  *  - forbid sd-card installation.
+ *  - reduced apk size by moving raw figures into "raw_media" directory.
  */
 
 
