@@ -1,24 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
-    android:layout_height="wrap_content"
-    android:orientation="vertical" 
-    android:background="@drawable/widget_bg_normal" 
-    android:layout_gravity="center" >
-
-    
-    <TextView
-        android:id="@+id/widget_textview"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/widget_text"
-        android:layout_gravity="center_horizontal|center"
-        android:layout_marginTop="5dip"
-        android:padding="10dip"
-        android:textColor="@android:color/black" />
-
-</LinearLayout> -->
-
 <LinearLayout
   xmlns:android="http://schemas.android.com/apk/res/android"
   android:orientation="vertical"
@@ -29,7 +9,7 @@
   android:background="@drawable/background">
     <TextView 
         android:id="@+id/widget_title" 
-        android:text="WIFI:" 
+        android:text="@string/wifi_string_header" 
         android:layout_height="wrap_content" 
         android:textAppearance="?android:attr/textAppearanceLarge" 
         android:layout_width="wrap_content"/>

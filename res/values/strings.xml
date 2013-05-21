@@ -1,7 +1,8 @@
 <resources>
 
-    <string name="app_name">Wifi SSID Widget</string>
-    <string name="widget_text">no SSID</string>
-    <string name="default_ssid_text">No connection</string>
+    <string name="app_name">WiFi SSID Widget</string>
+    <string name="wifi_string_header">WiFi:</string>
+    <string name="no_connection">No connection</string>
+    <string name="no_ssid">unknown ssid</string>
 
 </resources>

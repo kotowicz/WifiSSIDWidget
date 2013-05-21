@@ -17,7 +17,8 @@ import android.app.PendingIntent;
 /* TODO:
  *  - listen to WIFI state changes and update string only then
  *  - update WIFI name display after we switch to different AP (android 2.3)
- *  - better icon
+ *  - better icon (store)
+ *  - replace icon (widget)
  *  
  *  DONE:
  *  - remove "" from SSID string on some android versions
@@ -27,7 +28,8 @@ import android.app.PendingIntent;
  *  - two row layout
  *  - check if 'unknown ssid' is found and replace with 'no connection'  
  *  - fix all warnings: "Window > Preferences > XML > XML Files > Validation.".  set “Indicate when no grammar is specified” option to “Ignore”.
- *  - fixed crash when WIFI is disabled   
+ *  - fixed crash when WIFI is disabled  
+ *  - use string resources instead of hard coded strings. 
  */
 
 
@@ -86,7 +88,8 @@ public class WifiSSIDWidget extends AppWidgetProvider {
 		@Override
 		public void run() {
 			
-			String no_ssid = "<unknown ssid>";
+			//String no_ssid = "<unknown ssid>";
+			String no_ssid = context.getString(R.string.no_ssid);
 			String ssid = "";
 			
 			WifiManager wifiManager = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
@@ -103,7 +106,7 @@ public class WifiSSIDWidget extends AppWidgetProvider {
 			// look for the 'no_ssid' string inside the 'ssid' string. DO not use '!=' for string comparison.
 			boolean contains = ssid.contains(no_ssid);
 
-			String text_to_show = "No connection";
+			String text_to_show = context.getString(R.string.no_connection);
 			if ((ssid != null) && (contains == false)) {
 				text_to_show = ssid;
 			}
