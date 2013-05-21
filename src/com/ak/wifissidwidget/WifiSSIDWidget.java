@@ -16,7 +16,6 @@ import android.app.PendingIntent;
 
 /* TODO:
  *  - listen to WIFI state changes and update string only then
- *  - fix all warnings
  *  - better icon
  *  
  *  DONE:
@@ -26,6 +25,7 @@ import android.app.PendingIntent;
  *  - create activity if widget is clicked -> go to Wifi settings
  *  - two row layout
  *  - check if 'unknown ssid' is found and replace with 'no connection'  
+ *  - fix all warnings: "Window > Preferences > XML > XML Files > Validation.".  set “Indicate when no grammar is specified” option to “Ignore”.   
  */
 
 
