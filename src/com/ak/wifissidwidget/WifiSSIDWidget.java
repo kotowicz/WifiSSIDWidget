@@ -39,7 +39,60 @@ import android.app.PendingIntent;
  *  - reduced apk size by moving raw figures into "raw_media" directory.
  */
 
+import android.content.BroadcastReceiver;
+import android.os.Bundle;
+import android.widget.Toast;
 
+
+public class WifiSSIDWidget extends BroadcastReceiver {
+	private static final String TAG = "WifiSSIDWidget";	
+	private int state = 0;
+	RemoteViews remoteViews;
+
+
+    @Override
+    public void onReceive(Context context, Intent intent) {
+    	
+    	Log.v(TAG, "onReceive()");
+
+    	String ssid = get_SSID(context); 
+    	state = state + 1;
+        Toast.makeText(context, ssid + Integer.toString(state), Toast.LENGTH_LONG).show();
+        
+        remoteViews = new RemoteViews(context.getPackageName(), R.layout.main);
+        remoteViews.setTextViewText(R.id.widget_textview, ssid);
+
+    }
+    
+    private String get_SSID(Context context) {
+		String no_ssid = context.getString(R.string.no_ssid);
+		String ssid = "";
+		
+		WifiManager wifiManager = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
+		// try / finally here so that we don't crash in case wifiManager is unavailable.
+		try {
+			WifiInfo wifiInfo = wifiManager.getConnectionInfo();
+			ssid = wifiInfo.getSSID();
+			// remove starting and ending '"' characters (if present)
+			ssid = ssid.replaceAll("^\"|\"$", "");				
+		} catch (Exception e) {
+			ssid = no_ssid;
+		}
+
+		// look for the 'no_ssid' string inside the 'ssid' string. DO not use '!=' for string comparison.
+		boolean contains = ssid.contains(no_ssid);
+
+		String text_to_show = context.getString(R.string.no_connection);
+		if ((ssid != null) && (contains == false)) {
+			text_to_show = ssid;
+		}    	
+		
+    	return text_to_show;
+    }
+
+} 
+
+/*
 public class WifiSSIDWidget extends AppWidgetProvider {
 	private static final String TAG = "WifiSSIDWidget";
 	public static final String ACTION_BUTTON1_CLICKED = "com.ak.wifissidwidget.BUTTON1_CLICKED";
@@ -48,6 +101,11 @@ public class WifiSSIDWidget extends AppWidgetProvider {
 	@Override
 	public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
 
+		// Get all ids
+	    ComponentName thisWidget = new ComponentName(context, WifiSSIDWidget.class);
+	    int[] allWidgetIds = appWidgetManager.getAppWidgetIds(thisWidget);
+	    for (int widgetId : allWidgetIds) {		
+		
 		Timer timer = new Timer();
 		timer.scheduleAtFixedRate(new MySSIDDisplay(context, appWidgetManager), 1, 1000);
 		Log.v(TAG, "onUpdate()");
@@ -64,6 +122,9 @@ public class WifiSSIDWidget extends AppWidgetProvider {
 			// Log.d(TAG, "onReceive() - button clicked");
 			openWifiSettings(context);
 		}	
+		if (intent.getAction().equals(WifiManager.SUPPLICANT_CONNECTION_CHANGE_ACTION)) {
+			//Do something
+		}		
 	}
 
 	public void openWifiSettings(Context context) {
@@ -118,7 +179,7 @@ public class WifiSSIDWidget extends AppWidgetProvider {
 			}
 			remoteViews.setTextViewText(R.id.widget_textview, text_to_show);
 
-			/* register button click */
+			 register button click 
 			Intent intent = new Intent(ACTION_BUTTON1_CLICKED);
 			PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0, intent, 0);
 			remoteViews.setOnClickPendingIntent(R.id.widget_textview, pendingIntent);
@@ -128,4 +189,4 @@ public class WifiSSIDWidget extends AppWidgetProvider {
 
 	} 
 
-}
+}*/
