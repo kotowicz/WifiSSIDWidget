@@ -16,6 +16,7 @@ import android.app.PendingIntent;
 
 /* TODO:
  *  - listen to WIFI state changes and update string only then
+ *  - update WIFI name display after we switch to different AP (android 2.3)
  *  - better icon
  *  
  *  DONE:
@@ -25,7 +26,8 @@ import android.app.PendingIntent;
  *  - create activity if widget is clicked -> go to Wifi settings
  *  - two row layout
  *  - check if 'unknown ssid' is found and replace with 'no connection'  
- *  - fix all warnings: "Window > Preferences > XML > XML Files > Validation.".  set “Indicate when no grammar is specified” option to “Ignore”.   
+ *  - fix all warnings: "Window > Preferences > XML > XML Files > Validation.".  set “Indicate when no grammar is specified” option to “Ignore”.
+ *  - fixed crash when WIFI is disabled   
  */
 
 
@@ -70,13 +72,10 @@ public class WifiSSIDWidget extends AppWidgetProvider {
 		RemoteViews remoteViews;
 		AppWidgetManager appWidgetManager;
 		ComponentName thisWidget;
-		private WifiManager wifiManager;
 		private Context context;
 
 
 		public MySSIDDisplay(Context context, AppWidgetManager appWidgetManager) {
-			WifiManager wifiManager = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
-			this.wifiManager = wifiManager;
 			this.appWidgetManager = appWidgetManager;
 			// TODO: saving context here so that we have access to it inside the run() method.
 			this.context = context;
@@ -86,13 +85,22 @@ public class WifiSSIDWidget extends AppWidgetProvider {
 
 		@Override
 		public void run() {
-			WifiInfo wifiInfo = this.wifiManager.getConnectionInfo();	
-			String ssid = wifiInfo.getSSID();
-			// remove starting and ending '"' characters (if present)
-			ssid = ssid.replaceAll("^\"|\"$", "");
 			
-			// look for the 'no_ssid' string inside the 'ssid' string. DO not use '!=' for string comparison.
 			String no_ssid = "<unknown ssid>";
+			String ssid = "";
+			
+			WifiManager wifiManager = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
+			// try / finally here so that we don't crash in case wifiManager is unavailable.
+			try {
+				WifiInfo wifiInfo = wifiManager.getConnectionInfo();
+				ssid = wifiInfo.getSSID();
+				// remove starting and ending '"' characters (if present)
+				ssid = ssid.replaceAll("^\"|\"$", "");				
+			} catch (Exception e) {
+				ssid = no_ssid;
+			}
+
+			// look for the 'no_ssid' string inside the 'ssid' string. DO not use '!=' for string comparison.
 			boolean contains = ssid.contains(no_ssid);
 
 			String text_to_show = "No connection";
