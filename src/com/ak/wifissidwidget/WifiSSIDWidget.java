@@ -30,7 +30,8 @@ import android.app.PendingIntent;
  *  - fixed crash when WIFI is disabled  
  *  - use string resources instead of hard coded strings. 
  *  - replace icon (widget) - see:
- *  http://android-ui-utils.googlecode.com/hg/asset-studio/dist/icons-launcher.html#foreground.type=image&foreground.space.trim=1&foreground.space.pad=0.15&foreColor=fff%2C100&crop=0&backgroundShape=none&backColor=fff%2C100  
+ *  http://android-ui-utils.googlecode.com/hg/asset-studio/dist/icons-launcher.html#foreground.type=image&foreground.space.trim=1&foreground.space.pad=0.15&foreColor=fff%2C100&crop=0&backgroundShape=none&backColor=fff%2C100
+ *  - for icon generation see also: http://makeappicon.com/  
  */
 
 
