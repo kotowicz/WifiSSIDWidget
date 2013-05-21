@@ -16,6 +16,7 @@
     
     <Button 
         android:id="@+id/widget_textview"
+        android:singleLine="false"
         android:layout_width="wrap_content" 
         android:layout_height="wrap_content"/>
 </LinearLayout>
