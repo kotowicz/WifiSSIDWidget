@@ -15,6 +15,7 @@ import android.widget.RemoteViews;
 import android.app.PendingIntent;
 
 /* TODO:
+ *  - fix bug where wifi ap is displayed as 'no connection' even though we are connected. Update problem?
  *  - listen to WIFI state changes and update string only then
  *  - update WIFI name display after we switch to different AP (android 2.3)
  *  - better icon (store)
