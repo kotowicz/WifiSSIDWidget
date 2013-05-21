@@ -18,7 +18,6 @@ import android.app.PendingIntent;
  *  - listen to WIFI state changes and update string only then
  *  - update WIFI name display after we switch to different AP (android 2.3)
  *  - better icon (store)
- *  - replace icon (widget)
  *  
  *  DONE:
  *  - remove "" from SSID string on some android versions
@@ -30,6 +29,8 @@ import android.app.PendingIntent;
  *  - fix all warnings: "Window > Preferences > XML > XML Files > Validation.".  set “Indicate when no grammar is specified” option to “Ignore”.
  *  - fixed crash when WIFI is disabled  
  *  - use string resources instead of hard coded strings. 
+ *  - replace icon (widget) - see:
+ *  http://android-ui-utils.googlecode.com/hg/asset-studio/dist/icons-launcher.html#foreground.type=image&foreground.space.trim=1&foreground.space.pad=0.15&foreColor=fff%2C100&crop=0&backgroundShape=none&backColor=fff%2C100  
  */
 
 
