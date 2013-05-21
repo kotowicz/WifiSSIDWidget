@@ -44,12 +44,56 @@ import android.os.Bundle;
 import android.widget.Toast;
 
 
+public class WifiSSIDWidget extends AppWidgetProvider {
+
+	private static final String LOG = "de.vogella.android.widget.example";
+
+	@Override
+	public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
+
+		Log.w(LOG, "onUpdate method called");
+		// Get all ids
+		ComponentName thisWidget = new ComponentName(context, WifiSSIDWidget.class);
+		int[] allWidgetIds = appWidgetManager.getAppWidgetIds(thisWidget);
+
+		// Build the intent to call the service
+		Intent intent = new Intent(context.getApplicationContext(), UpdateWidgetService.class);
+		intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, allWidgetIds);
+
+		// Update the widgets via the service
+		context.startService(intent);
+	}
+} 
+/*
+
 public class WifiSSIDWidget extends BroadcastReceiver {
 	private static final String TAG = "WifiSSIDWidget";	
 	private int state = 0;
 	RemoteViews remoteViews;
 
+	public class MyWidgetProvider extends AppWidgetProvider {
 
+		  private static final String LOG = "de.vogella.android.widget.example";
+
+		  @Override
+		  public void onUpdate(Context context, AppWidgetManager appWidgetManager,
+		      int[] appWidgetIds) {
+
+		    Log.w(LOG, "onUpdate method called");
+		    // Get all ids
+		    ComponentName thisWidget = new ComponentName(context,
+		        MyWidgetProvider.class);
+		    int[] allWidgetIds = appWidgetManager.getAppWidgetIds(thisWidget);
+
+		    // Build the intent to call the service
+		    Intent intent = new Intent(context.getApplicationContext(),
+		        UpdateWidgetService.class);
+		    intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, allWidgetIds);
+
+		    // Update the widgets via the service
+		    context.startService(intent);
+		  }
+		} 
     @Override
     public void onReceive(Context context, Intent intent) {
     	
@@ -90,7 +134,7 @@ public class WifiSSIDWidget extends BroadcastReceiver {
     	return text_to_show;
     }
 
-} 
+} */
 
 /*
 public class WifiSSIDWidget extends AppWidgetProvider {

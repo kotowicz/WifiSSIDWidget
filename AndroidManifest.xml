@@ -1,4 +1,4 @@
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+<?xml version="1.0" encoding="UTF-8"?><manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.ak.wifissidwidget"
     android:versionCode="19"
     android:versionName="0.14.7"
@@ -23,8 +23,15 @@
     <receiver android:name=".WifiSSIDWidget" android:label="@string/app_name">
         <intent-filter> 
             <action android:name="android.appwidget.action.APPWIDGET_UPDATE"/> 
-            <action android:name="com.ak.wifissidwidget.BUTTON1_CLICKED"/>
+        </intent-filter>
+        <meta-data android:name="android.appwidget.provider" android:resource="@xml/wifi_ssid_widget_provider" />
+    </receiver>   
+    
+    <receiver android:name=".Broadcaster" android:label="Broadcaster">
+        <intent-filter> 
             <action android:name="android.net.wifi.STATE_CHANGE"/>
+            <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
+            <action android:name="android.net.wifi.WIFI_STATE_CHANGED" />            
             <!-- android.net.wifi.supplicant.CONNECTION_CHANGE
 				 	Broadcast intent action indicating that a connection to the supplicant has been established (and it is now possible to perform Wi-Fi operations) or the connection to the supplicant has been lost. One extra provides the connection state as a boolean, where true means CONNECTED.            
             	 android.net.wifi.WIFI_STATE_CHANGED
@@ -33,8 +40,8 @@
             	 	Broadcast intent action indicating that the state of Wi-Fi connectivity has changed. One extra provides the new state in the form of a NetworkInfo object. If the new state is CONNECTED, a second extra may provide the BSSID of the access point, as a String.
             		 -->
         </intent-filter>
-        <meta-data android:name="android.appwidget.provider" android:resource="@xml/wifi_ssid_widget_provider" />
-    </receiver>           
+    </receiver>   
+    <service android:name=".UpdateWidgetService"></service>   
         
     </application>
 
