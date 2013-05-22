@@ -40,6 +40,9 @@ public class UpdateWidgetService extends Service {
 			remoteViews.setOnClickPendingIntent(R.id.widget_textview, pendingIntent);
 			
 			appWidgetManager.updateAppWidget(widgetId, remoteViews);
+			
+			/* notify our system to send out a broadcast that will update the UI */
+			WifiSSIDWidgetAppWidgetProvider.sendUpdateIntent(this.getApplicationContext());
 		}
 		stopSelf();
 
@@ -59,6 +62,7 @@ public class UpdateWidgetService extends Service {
 		intent.addCategory(Intent.CATEGORY_LAUNCHER);
 		intent.setComponent(cn);
 		intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+		/* TODO: remove log */
 		Log.i(LOG, "Intent created: com.android.settings.wifi.WifiSettings");
 		
 		return intent;

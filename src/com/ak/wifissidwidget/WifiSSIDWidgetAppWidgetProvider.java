@@ -9,7 +9,7 @@ import android.util.Log;
 import android.widget.RemoteViews;
 
 /* TODO:
- *  - force update of GUI once widget is added to home screen.
+*
  *  - remove unnecessary permissions
  *  - remove unnecessary broadcast intents.
  *  - remove Toast calls (might get too annoying).
@@ -52,6 +52,9 @@ import android.widget.RemoteViews;
  *  
  *  Version 0.15.1
  *  - use xml resource to render button.
+ *  
+ *  Version 0.15.3
+ *  - force update of GUI once widget is added to home screen.
  */
 
 
@@ -59,6 +62,9 @@ import android.widget.RemoteViews;
 public class WifiSSIDWidgetAppWidgetProvider extends AppWidgetProvider {
 
 	private static final String LOG = "com.ak.wifissidwidget";
+	/* custom intent action */
+	public static final String UPDATE_WIDGET = "com.ak.wifissidwidget.UPDATE_WIDGET";
+
 
 	@Override
 	public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
@@ -88,5 +94,15 @@ public class WifiSSIDWidgetAppWidgetProvider extends AppWidgetProvider {
 		*/
 		
 	}
+	
+	public static void sendUpdateIntent(Context context) 
+	{
+	    Intent i = new Intent();
+	    i.setAction(UPDATE_WIDGET);
+	    context.sendBroadcast(i);
+		// TODO: remove logging message
+		Log.i(LOG, "UPDATE_WIDGET broadcast sent");	    
+	}	
+	
 } 
 
