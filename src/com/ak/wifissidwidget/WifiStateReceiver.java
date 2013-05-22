@@ -22,7 +22,7 @@ public class WifiStateReceiver extends BroadcastReceiver {
 		
 		RemoteViews remoteViews = new RemoteViews(context.getPackageName(), R.layout.main);
 		
-		String ssid = get_SSID(context);		
+		String ssid = get_SSID(context);
 		
 		/* TODO: remove Toast because WIFI states do change quite frequently */
 		Toast.makeText(context, "WiFi - " + ssid, Toast.LENGTH_SHORT).show();
@@ -35,7 +35,7 @@ public class WifiStateReceiver extends BroadcastReceiver {
 
 	}
 
-	private String get_SSID(Context context) {
+	public static String get_SSID(Context context) {
 		
 		String no_ssid = context.getString(R.string.no_ssid);
 		String ssid = "";
