@@ -45,6 +45,9 @@ import android.util.Log;
  *  - write AP name in Medium font size (changed also margins)
  *  - initialize AP name with 'wifi_not_initialized' string.
  *  - reduce minWidth by 6dp.
+ *  
+ *  Version 0.15.1
+ *  - use xml resource to render button.
  */
 
 
