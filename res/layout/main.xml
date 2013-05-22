@@ -16,6 +16,10 @@
     
     <Button 
         android:id="@+id/widget_textview"
+        android:text="@string/wifi_not_initialized" 
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:layout_marginLeft="1dp"
+        android:layout_marginRight="1dp"      
         android:singleLine="false"
         android:layout_width="wrap_content" 
         android:layout_height="wrap_content"/>

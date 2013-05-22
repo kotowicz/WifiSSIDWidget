@@ -1,61 +1,68 @@
 package com.ak.wifissidwidget;
 
-
 import android.app.PendingIntent;
 import android.app.Service;
 import android.appwidget.AppWidgetManager;
 import android.content.ComponentName;
+import android.content.Context;
 import android.content.Intent;
 import android.os.IBinder;
 import android.util.Log;
 import android.widget.RemoteViews;
 
 public class UpdateWidgetService extends Service {
-	private static final String LOG = "com.ak.wifissidwidget.example";
+	private static final String LOG = "com.ak.wifissidwidget";
 
 	@Override
 	public int onStartCommand(Intent intent, int flags, int startId) {
 
-		int startCont = super.onStartCommand(intent, flags, startId);
-
-		Log.i(LOG, "Called");
-		// Create some random data
+		// TODO: remove log entry.
+		Log.i(LOG, "onStartCommand() Called");
 
 		AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(this.getApplicationContext());
 
 		int[] allWidgetIds = intent.getIntArrayExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS);
-
-		ComponentName thisWidget = new ComponentName(getApplicationContext(), WifiSSIDWidget.class);
-		int[] allWidgetIds2 = appWidgetManager.getAppWidgetIds(thisWidget);
-		Log.w(LOG, "From Intent" + String.valueOf(allWidgetIds.length));
-		Log.w(LOG, "Direct" + String.valueOf(allWidgetIds2.length));
+		
+		// TODO: remove log entry.
+		Log.i(LOG, "From Intent" + String.valueOf(allWidgetIds.length));
 
 		for (int widgetId : allWidgetIds) {
-			// Create some random data
-			//int number = (new Random().nextInt(100));
 
-			RemoteViews remoteViews = new RemoteViews(this.getApplicationContext().getPackageName(), R.layout.main);
-			//Log.w("WidgetExample", String.valueOf(number));
-			// Set the text
-			//remoteViews.setTextViewText(R.id.widget_textview, "Random: " + String.valueOf(number));
+			RemoteViews remoteViews = new RemoteViews(this
+					.getApplicationContext().getPackageName(),
+					R.layout.main);			
 
 			// Register an onClickListener
-			Intent clickIntent = new Intent(this.getApplicationContext(), WifiSSIDWidget.class);
+			Intent clickIntent = CreateWifiSettingsIntent(this.getApplicationContext());
 
-			clickIntent.setAction(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
-			clickIntent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, allWidgetIds);
-
-			PendingIntent pendingIntent = PendingIntent.getBroadcast(getApplicationContext(), 0, clickIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+			PendingIntent pendingIntent = PendingIntent.getActivity(getApplicationContext(), 0, clickIntent,
+					PendingIntent.FLAG_UPDATE_CURRENT);
 			remoteViews.setOnClickPendingIntent(R.id.widget_textview, pendingIntent);
+			
 			appWidgetManager.updateAppWidget(widgetId, remoteViews);
 		}
 		stopSelf();
 
-		return startCont;
+		return Service.START_STICKY;
 	}
 
 	@Override
 	public IBinder onBind(Intent intent) {
 		return null;
 	}
+	
+	public Intent CreateWifiSettingsIntent(Context context) {
+		
+		final Intent intent = new Intent(Intent.ACTION_MAIN, null);
+		final ComponentName cn = new ComponentName("com.android.settings", "com.android.settings.wifi.WifiSettings");
+		
+		intent.addCategory(Intent.CATEGORY_LAUNCHER);
+		intent.setComponent(cn);
+		intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+		Log.i(LOG, "Intent created: com.android.settings.wifi.WifiSettings");
+		
+		return intent;
+		
+	}   	
+	
 } 

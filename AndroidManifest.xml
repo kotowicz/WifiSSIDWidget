@@ -1,16 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?><manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.ak.wifissidwidget"
-    android:versionCode="19"
-    android:versionName="0.14.7"
+    android:versionCode="22"
+    android:versionName="0.15.0"
     android:installLocation="internalOnly" >
 
     <uses-sdk
         android:minSdkVersion="8"
         android:targetSdkVersion="17" />
     
-	<uses-permission 
-	    android:name="android.permission.ACCESS_WIFI_STATE">
-	</uses-permission>       
+    <!-- Permissions -->
+	<uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+	<!-- TODO: remove. added for debugging -->       
+    <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />	
 
     <application
         android:allowBackup="true"
@@ -19,16 +21,21 @@
         android:theme="@style/AppTheme" >
 
 
-    <!--  Broadcast Receiver -->
-    <receiver android:name=".WifiSSIDWidget" android:label="@string/app_name">
+    <!-- Widget Broadcast receiver -->
+    <receiver android:name=".WifiSSIDWidgetAppWidgetProvider" android:label="@string/app_name">
         <intent-filter> 
             <action android:name="android.appwidget.action.APPWIDGET_UPDATE"/> 
         </intent-filter>
         <meta-data android:name="android.appwidget.provider" android:resource="@xml/wifi_ssid_widget_provider" />
     </receiver>   
+    <service android:name=".UpdateWidgetService"></service>
     
-    <receiver android:name=".Broadcaster" android:label="Broadcaster">
+    <!-- Connectivity broadcast receiver -->
+    <receiver android:name=".WifiStateReceiver" android:label="WifiStateReceiver">
         <intent-filter> 
+			<!-- TODO: remove. added for debugging -->
+            <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
+            <!-- WIFI change events -->
             <action android:name="android.net.wifi.STATE_CHANGE"/>
             <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
             <action android:name="android.net.wifi.WIFI_STATE_CHANGED" />            
@@ -41,7 +48,7 @@
             		 -->
         </intent-filter>
     </receiver>   
-    <service android:name=".UpdateWidgetService"></service>   
+   
         
     </application>
 

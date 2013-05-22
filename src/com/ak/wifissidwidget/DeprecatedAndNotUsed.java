@@ -1,69 +1,10 @@
 package com.ak.wifissidwidget;
 
-import java.util.Timer;
-import java.util.TimerTask;
+public class DeprecatedAndNotUsed {
 
-import android.appwidget.AppWidgetManager;
-import android.appwidget.AppWidgetProvider;
-import android.content.ComponentName;
-import android.content.Context;
-import android.content.Intent;
-import android.net.wifi.WifiInfo;
-import android.net.wifi.WifiManager;
-import android.util.Log;
-import android.widget.RemoteViews;
-import android.app.PendingIntent;
-
-/* TODO:
- *  - fix bug where wifi ap is displayed as 'no connection' even though we are connected. Update problem?
- *  - listen to WIFI state changes and update string only then
- *  - update WIFI name display after we switch to different AP (android 2.3)
- *  - better icon (store)
- *  
- *  DONE:
- *  - remove "" from SSID string on some android versions
- *  - create icon
- *  - fix background
- *  - create activity if widget is clicked -> go to Wifi settings
- *  - two row layout
- *  - check if 'unknown ssid' is found and replace with 'no connection'  
- *  - fix all warnings: "Window > Preferences > XML > XML Files > Validation.".  set “Indicate when no grammar is specified” option to “Ignore”.
- *  - fixed crash when WIFI is disabled  
- *  - use string resources instead of hard coded strings. 
- *  - replace icon (widget) - see:
- *  http://android-ui-utils.googlecode.com/hg/asset-studio/dist/icons-launcher.html#foreground.type=image&foreground.space.trim=1&foreground.space.pad=0.15&foreColor=fff%2C100&crop=0&backgroundShape=none&backColor=fff%2C100
- *  - for icon generation see also: http://makeappicon.com/
- *  - smaller default size
- *  - allow resizing on android 3.0+  
- *  - forbid sd-card installation.
- *  - reduced apk size by moving raw figures into "raw_media" directory.
- */
-
-import android.content.BroadcastReceiver;
-import android.os.Bundle;
-import android.widget.Toast;
+}
 
 
-public class WifiSSIDWidget extends AppWidgetProvider {
-
-	private static final String LOG = "de.vogella.android.widget.example";
-
-	@Override
-	public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
-
-		Log.w(LOG, "onUpdate method called");
-		// Get all ids
-		ComponentName thisWidget = new ComponentName(context, WifiSSIDWidget.class);
-		int[] allWidgetIds = appWidgetManager.getAppWidgetIds(thisWidget);
-
-		// Build the intent to call the service
-		Intent intent = new Intent(context.getApplicationContext(), UpdateWidgetService.class);
-		intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, allWidgetIds);
-
-		// Update the widgets via the service
-		context.startService(intent);
-	}
-} 
 /*
 
 public class WifiSSIDWidget extends BroadcastReceiver {

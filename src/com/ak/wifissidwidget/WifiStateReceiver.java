@@ -1,6 +1,8 @@
 package com.ak.wifissidwidget;
 
+import android.appwidget.AppWidgetManager;
 import android.content.BroadcastReceiver;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.net.wifi.WifiInfo;
@@ -9,29 +11,32 @@ import android.util.Log;
 import android.widget.RemoteViews;
 import android.widget.Toast;
 
-public class Broadcaster extends BroadcastReceiver {
-	private static final String TAG = "WifiSSIDWidget";	
-	private int state = 0;
-	RemoteViews remoteViews;
-
+public class WifiStateReceiver extends BroadcastReceiver {
+	
+	private static final String LOG = "com.ak.wifissidwidget";
 
 	@Override
 	public void onReceive(Context context, Intent intent) {
 
-		Log.v(TAG, "onReceive()");
+		Log.v(LOG, "WifiStateReceiver - onReceive()");
+		
+		RemoteViews remoteViews = new RemoteViews(context.getPackageName(), R.layout.main);
+		
+		String ssid = get_SSID(context);		
+		
+		/* TODO: remove Toast because WIFI states do change quite frequently */
+		Toast.makeText(context, "WiFi - " + ssid, Toast.LENGTH_SHORT).show();
+		
+		remoteViews.setTextViewText(R.id.widget_textview, ssid);
 
-		String ssid = get_SSID(context); 
-		state = state + 1;
-		Toast.makeText(context, ssid + Integer.toString(state), Toast.LENGTH_LONG).show();
-
-		Intent newintent = new Intent(context, UpdateWidgetService.class);
-		String intent_string = "String you want to pass";
-		newintent.putExtra("name", intent_string);
-		context.startService(newintent);
+		ComponentName thiswidget = new ComponentName(context, WifiSSIDWidgetAppWidgetProvider.class);		
+		AppWidgetManager manager = AppWidgetManager.getInstance(context);
+		manager.updateAppWidget(thiswidget, remoteViews);
 
 	}
 
 	private String get_SSID(Context context) {
+		
 		String no_ssid = context.getString(R.string.no_ssid);
 		String ssid = "";
 
@@ -55,6 +60,7 @@ public class Broadcaster extends BroadcastReceiver {
 		}    	
 
 		return text_to_show;
+		
 	}
 
 } 
