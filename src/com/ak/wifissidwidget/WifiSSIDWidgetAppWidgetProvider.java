@@ -9,6 +9,9 @@ import android.util.Log;
 
 /* TODO:
  *  - force update of GUI once widget is added to home screen.
+ *  - remove unnecessary permissions
+ *  - remove unnecessary broadcast intents.
+ *  - remove Toast calls (might get too annoying).
  *  - better icon (store)
  *  
  *  DONE:
