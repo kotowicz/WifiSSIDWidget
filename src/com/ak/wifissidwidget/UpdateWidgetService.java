@@ -40,12 +40,15 @@ public class UpdateWidgetService extends Service {
 			remoteViews.setOnClickPendingIntent(R.id.widget_textview, pendingIntent);
 			
 			appWidgetManager.updateAppWidget(widgetId, remoteViews);
-			
-			/* notify our system to send out a broadcast that will update the UI */
-			WifiSSIDWidgetAppWidgetProvider.sendUpdateIntent(this.getApplicationContext());
+
 		}
+		
+		/* TODO: why should we call stopSelf() here? */
 		stopSelf();
 
+		/* notify our system to send out a broadcast that will update the UI */
+		WifiSSIDWidgetAppWidgetProvider.sendUpdateIntent(this.getApplicationContext());		
+		
 		return Service.START_STICKY;
 	}
 

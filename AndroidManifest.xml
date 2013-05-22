@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?><manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.ak.wifissidwidget"
-    android:versionCode="26"
+    android:versionCode="27"
     android:versionName="0.15.3"
     android:installLocation="internalOnly" >
 

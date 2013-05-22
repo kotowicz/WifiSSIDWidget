@@ -83,16 +83,6 @@ public class WifiSSIDWidgetAppWidgetProvider extends AppWidgetProvider {
 		// Update the widgets via the service
 		context.startService(intent);
 		
-		// Update the current Wifi state
-		/* does not really work
-		String ssid = WifiStateReceiver.get_SSID(context.getApplicationContext());		
-		
-		RemoteViews remoteViews = new RemoteViews(context.getApplicationContext().getPackageName(), R.layout.main);
-		AppWidgetManager manager = AppWidgetManager.getInstance(context.getApplicationContext());
-		remoteViews.setTextViewText(R.id.widget_textview, ssid);
-		manager.updateAppWidget(thisWidget, remoteViews);
-		*/
-		
 	}
 	
 	public static void sendUpdateIntent(Context context) 
