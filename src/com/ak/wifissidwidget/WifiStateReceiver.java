@@ -18,6 +18,10 @@ public class WifiStateReceiver extends BroadcastReceiver {
 
 		/* remove log */
 		// Log.v(LOG, "WifiStateReceiver - onReceive()");
+		// Log.v(LOG, "Action: " + intent.getAction());
+		// if ("android.intent.action.PACKAGE_REPLACED".equals(intent.getAction())) {
+		//	Log.v(LOG, "upgrading package");
+		//}
 		
 		RemoteViews remoteViews = new RemoteViews(context.getPackageName(), R.layout.main);
 

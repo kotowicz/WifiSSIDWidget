@@ -66,6 +66,9 @@ import android.widget.RemoteViews;
  *  - removed Log.i() calls.
  *  - removed unnecessary code.
  *  
+ *  Version 0.15.6
+ *  - added sample code for broadcasting PACKAGE_UPGRADE event. needs more work.
+ *  
  */
 
 
