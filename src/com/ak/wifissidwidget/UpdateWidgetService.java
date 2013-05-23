@@ -16,21 +16,23 @@ public class UpdateWidgetService extends Service {
 	@Override
 	public int onStartCommand(Intent intent, int flags, int startId) {
 
-		// TODO: remove log entry.
-		Log.i(LOG, "onStartCommand() Called");
+		// remove log entry.
+		// Log.i(LOG, "onStartCommand() Called");
 
 		AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(this.getApplicationContext());
 
 		int[] allWidgetIds = intent.getIntArrayExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS);
 		
-		// TODO: remove log entry.
-		Log.i(LOG, "From Intent" + String.valueOf(allWidgetIds.length));
+		// remove log entry.
+		// Log.i(LOG, "From Intent" + String.valueOf(allWidgetIds.length));
 		
-		// TODO: remove log entry and unnecessary code
+		// remove log entry and unnecessary code
+		/*
 		ComponentName thisWidget = new ComponentName(getApplicationContext(),
 				WifiSSIDWidgetAppWidgetProvider.class);		
 		int[] allWidgetIds2 = appWidgetManager.getAppWidgetIds(thisWidget);
-		Log.i(LOG, "Direct" + String.valueOf(allWidgetIds2.length));
+		// Log.i(LOG, "Direct" + String.valueOf(allWidgetIds2.length));
+		*/
 
 		for (int widgetId : allWidgetIds) {
 
@@ -50,8 +52,8 @@ public class UpdateWidgetService extends Service {
 			
 			appWidgetManager.updateAppWidget(widgetId, remoteViews);
 			
-			/* TODO: remove log */
-			Log.i(LOG, "onClickListener Registered");
+			/* remove log */
+			// Log.i(LOG, "onClickListener Registered");
 
 		}
 
@@ -59,7 +61,7 @@ public class UpdateWidgetService extends Service {
 		/* this blocks the UI on Android 2.2! */
 		// WifiSSIDWidgetAppWidgetProvider.sendUpdateIntent(this.getApplicationContext());		
 		
-		/* TODO: why should we call stopSelf() here? */
+		/* TODO: why are we calling stopSelf() here? Clarify! */
 		stopSelf();
 		
 		return Service.START_STICKY;
@@ -79,8 +81,8 @@ public class UpdateWidgetService extends Service {
 		intent.setComponent(cn);
 		
 		intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-		/* TODO: remove log */
-		Log.i(LOG, "Intent created: com.android.settings.wifi.WifiSettings");
+		/* remove log */
+		// Log.i(LOG, "Intent created: com.android.settings.wifi.WifiSettings");
 		
 		return intent;
 		

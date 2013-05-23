@@ -16,15 +16,16 @@ public class WifiStateReceiver extends BroadcastReceiver {
 	@Override
 	public void onReceive(Context context, Intent intent) {
 
-		Log.v(LOG, "WifiStateReceiver - onReceive()");
+		/* remove log */
+		// Log.v(LOG, "WifiStateReceiver - onReceive()");
 		
 		RemoteViews remoteViews = new RemoteViews(context.getPackageName(), R.layout.main);
 
 		/* update the AP name */
 		String ssid = WifiSSIDWidgetAppWidgetProvider.updateSSIDstring(context, remoteViews);
 		
-		/* TODO: remove Toast because WIFI states do change quite frequently */
-		Toast.makeText(context, "WiFi - " + ssid, Toast.LENGTH_SHORT).show();
+		/* remove Toast because WIFI states do change quite frequently */
+		// Toast.makeText(context, "WiFi - " + ssid, Toast.LENGTH_SHORT).show();
 
 
 		ComponentName thiswidget = new ComponentName(context, WifiSSIDWidgetAppWidgetProvider.class);		

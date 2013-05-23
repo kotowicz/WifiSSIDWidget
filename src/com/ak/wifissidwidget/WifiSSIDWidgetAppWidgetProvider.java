@@ -10,11 +10,8 @@ import android.net.wifi.WifiManager;
 import android.util.Log;
 import android.widget.RemoteViews;
 
-/* TODO:
+/* Things left TODO:
 *
- *  - remove unnecessary permissions
- *  - remove unnecessary broadcast intents.
- *  - remove Toast calls (might get too annoying).
  *  - better icon (store)
  *  
  *  DONE:
@@ -61,6 +58,14 @@ import android.widget.RemoteViews;
  *  Version 0.15.4
  *  - fix launcher problems
  *  - update GUI on startup accordingly.
+ *  
+ *  Version 0.15.5
+ *  - remove unnecessary permissions
+ *  - remove unnecessary broadcast intents.
+ *  - remove Toast calls (might get too annoying).
+ *  - removed Log.i() calls.
+ *  - removed unnecessary code.
+ *  
  */
 
 
@@ -75,8 +80,8 @@ public class WifiSSIDWidgetAppWidgetProvider extends AppWidgetProvider {
 	@Override
 	public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
 
-		// TODO: remove logging message
-		Log.i(LOG, "onUpdate() called");
+		// remove logging message
+		// Log.i(LOG, "onUpdate() called");
 		
 		// Get all ids
 		ComponentName thisWidget = new ComponentName(context, WifiSSIDWidgetAppWidgetProvider.class);
@@ -89,8 +94,8 @@ public class WifiSSIDWidgetAppWidgetProvider extends AppWidgetProvider {
 		// Update the widgets via the service
 		context.startService(intent);
 		
-		// TODO: remove logging message
-		Log.i(LOG, "Service started.");		
+		// remove logging message
+		// Log.i(LOG, "Service started.");		
 		
 	}
 	
@@ -130,28 +135,6 @@ public class WifiSSIDWidgetAppWidgetProvider extends AppWidgetProvider {
 		
 		return ssid;
 	}
-	
-/*	@Override
-	public void onEnabled (Context context) {
-		 super.onEnabled(context);
-		 Log.i(LOG, "onEnabled() called");
-	}
-	
-	
-	@Override
-	public void onReceive(Context context, Intent intent) {
-		 super.onReceive(context, intent);
-		 Log.i(LOG, "onReceive() called");
-	}*/
-	
-	public static void sendUpdateIntent(Context context) 
-	{
-	    Intent i = new Intent();
-	    i.setAction(UPDATE_WIDGET);
-	    context.sendBroadcast(i);
-		// TODO: remove logging message
-		Log.i(LOG, "UPDATE_WIDGET broadcast sent");	    
-	}	
 	
 } 
 
