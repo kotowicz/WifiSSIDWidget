@@ -11,7 +11,8 @@ import android.util.Log;
 import android.widget.RemoteViews;
 
 /* Things left TODO:
-*
+ *
+ *  - reinitalize UI when 'PACKAGE_REPLACED' is broadcasted.
  *  - better icon (store)
  *  
  *  DONE:
@@ -24,12 +25,12 @@ import android.widget.RemoteViews;
  *  - fix all warnings: "Window > Preferences > XML > XML Files > Validation.".  set “Indicate when no grammar is specified” option to “Ignore”.
  *  - fixed crash when WIFI is disabled  
  *  - use string resources instead of hard coded strings.
-*
+ *
  *  Version 0.14.4 
  *  - replace icon (widget) - see:
  *  http://android-ui-utils.googlecode.com/hg/asset-studio/dist/icons-launcher.html#foreground.type=image&foreground.space.trim=1&foreground.space.pad=0.15&foreColor=fff%2C100&crop=0&backgroundShape=none&backColor=fff%2C100
  *  - for icon generation see also: http://makeappicon.com/
-
+ *
  *  Version 0.14.5  
  *  - smaller default size
  *  - allow resizing on android 3.0+
@@ -68,6 +69,9 @@ import android.widget.RemoteViews;
  *  
  *  Version 0.15.6
  *  - added sample code for broadcasting PACKAGE_UPGRADE event. needs more work.
+ *  
+ *  Version 0.15.7
+ *  - activated proguard -> app size reduced from 820KB to 236KB.
  *  
  */
 
