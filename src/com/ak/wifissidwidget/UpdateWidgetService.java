@@ -25,6 +25,12 @@ public class UpdateWidgetService extends Service {
 		
 		// TODO: remove log entry.
 		Log.i(LOG, "From Intent" + String.valueOf(allWidgetIds.length));
+		
+		// TODO: remove log entry and unnecessary code
+		ComponentName thisWidget = new ComponentName(getApplicationContext(),
+				WifiSSIDWidgetAppWidgetProvider.class);		
+		int[] allWidgetIds2 = appWidgetManager.getAppWidgetIds(thisWidget);
+		Log.i(LOG, "Direct" + String.valueOf(allWidgetIds2.length));
 
 		for (int widgetId : allWidgetIds) {
 
@@ -35,19 +41,26 @@ public class UpdateWidgetService extends Service {
 			// Register an onClickListener
 			Intent clickIntent = CreateWifiSettingsIntent(this.getApplicationContext());
 
-			PendingIntent pendingIntent = PendingIntent.getActivity(getApplicationContext(), 0, clickIntent,
+			PendingIntent pendingIntent = PendingIntent.getActivity(this.getApplicationContext(), 0, clickIntent,
 					PendingIntent.FLAG_UPDATE_CURRENT);
 			remoteViews.setOnClickPendingIntent(R.id.widget_textview, pendingIntent);
 			
+			/* setup initial AP name value */
+			WifiSSIDWidgetAppWidgetProvider.updateSSIDstring(this.getApplicationContext(), remoteViews);
+			
 			appWidgetManager.updateAppWidget(widgetId, remoteViews);
+			
+			/* TODO: remove log */
+			Log.i(LOG, "onClickListener Registered");
 
 		}
+
+		/* notify our system to send out a broadcast that will update the UI */
+		/* this blocks the UI on Android 2.2! */
+		// WifiSSIDWidgetAppWidgetProvider.sendUpdateIntent(this.getApplicationContext());		
 		
 		/* TODO: why should we call stopSelf() here? */
 		stopSelf();
-
-		/* notify our system to send out a broadcast that will update the UI */
-		WifiSSIDWidgetAppWidgetProvider.sendUpdateIntent(this.getApplicationContext());		
 		
 		return Service.START_STICKY;
 	}
@@ -64,6 +77,7 @@ public class UpdateWidgetService extends Service {
 		
 		intent.addCategory(Intent.CATEGORY_LAUNCHER);
 		intent.setComponent(cn);
+		
 		intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 		/* TODO: remove log */
 		Log.i(LOG, "Intent created: com.android.settings.wifi.WifiSettings");
