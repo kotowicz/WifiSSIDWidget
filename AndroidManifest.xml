@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?><manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.ak.wifissidwidget"
-    android:versionCode="29"
-    android:versionName="0.15.6"
+    android:versionCode="30"
+    android:versionName="0.15.7"
     android:installLocation="internalOnly" >
 
     <uses-sdk
