@@ -50486,26 +50486,36 @@ _____________________________________________________________________
 
 Interfaces (count = 0):
 
-Constant Pool (count = 45):
+Constant Pool (count = 63):
+  + Integer [0]
   + Integer [2130903040]
+  + String [android.intent.action.PACKAGE_REPLACED]
   + Class [android/appwidget/AppWidgetManager]
   + Class [android/content/BroadcastReceiver]
   + Class [android/content/ComponentName]
   + Class [android/content/Context]
+  + Class [android/content/Intent]
   + Class [android/widget/RemoteViews]
   + Class [com/ak/wifissidwidget/WifiSSIDWidgetAppWidgetProvider]
   + Class [com/ak/wifissidwidget/WifiStateReceiver]
+  + Class [java/lang/String]
+  + Fieldref [com/ak/wifissidwidget/WifiStateReceiver.a Z]
   + Methodref [android/appwidget/AppWidgetManager.getInstance (Landroid/content/Context;)Landroid/appwidget/AppWidgetManager;]
   + Methodref [android/appwidget/AppWidgetManager.updateAppWidget (Landroid/content/ComponentName;Landroid/widget/RemoteViews;)V]
   + Methodref [android/content/BroadcastReceiver.<init> ()V]
   + Methodref [android/content/ComponentName.<init> (Landroid/content/Context;Ljava/lang/Class;)V]
   + Methodref [android/content/Context.getPackageName ()Ljava/lang/String;]
+  + Methodref [android/content/Intent.getAction ()Ljava/lang/String;]
   + Methodref [android/widget/RemoteViews.<init> (Ljava/lang/String;I)V]
   + Methodref [com/ak/wifissidwidget/WifiSSIDWidgetAppWidgetProvider.a (Landroid/content/Context;Landroid/widget/RemoteViews;)Ljava/lang/String;]
+  + Methodref [java/lang/String.equals (Ljava/lang/Object;)Z]
   + NameAndType [<init> ()V]
   + NameAndType [<init> (Landroid/content/Context;Ljava/lang/Class;)V]
   + NameAndType [<init> (Ljava/lang/String;I)V]
   + NameAndType [a (Landroid/content/Context;Landroid/widget/RemoteViews;)Ljava/lang/String;]
+  + NameAndType [a Z]
+  + NameAndType [equals (Ljava/lang/Object;)Z]
+  + NameAndType [getAction ()Ljava/lang/String;]
   + NameAndType [getInstance (Landroid/content/Context;)Landroid/appwidget/AppWidgetManager;]
   + NameAndType [getPackageName ()Ljava/lang/String;]
   + NameAndType [updateAppWidget (Landroid/content/ComponentName;Landroid/widget/RemoteViews;)V]
@@ -50516,76 +50526,102 @@ Constant Pool (count = 45):
   + Utf8 [(Landroid/content/Context;Landroid/content/Intent;)V]
   + Utf8 [(Landroid/content/Context;Landroid/widget/RemoteViews;)Ljava/lang/String;]
   + Utf8 [(Landroid/content/Context;Ljava/lang/Class;)V]
+  + Utf8 [(Ljava/lang/Object;)Z]
   + Utf8 [(Ljava/lang/String;I)V]
   + Utf8 [<init>]
   + Utf8 [Code]
+  + Utf8 [ConstantValue]
+  + Utf8 [Z]
   + Utf8 [a]
+  + Utf8 [android.intent.action.PACKAGE_REPLACED]
   + Utf8 [android/appwidget/AppWidgetManager]
   + Utf8 [android/content/BroadcastReceiver]
   + Utf8 [android/content/ComponentName]
   + Utf8 [android/content/Context]
+  + Utf8 [android/content/Intent]
   + Utf8 [android/widget/RemoteViews]
   + Utf8 [com/ak/wifissidwidget/WifiSSIDWidgetAppWidgetProvider]
   + Utf8 [com/ak/wifissidwidget/WifiStateReceiver]
+  + Utf8 [equals]
+  + Utf8 [getAction]
   + Utf8 [getInstance]
   + Utf8 [getPackageName]
+  + Utf8 [java/lang/String]
   + Utf8 [onReceive]
   + Utf8 [updateAppWidget]
 
-Fields (count = 0):
+Fields (count = 1):
+  + Field:        a Z
+    Access flags: 0x12
+      = private final boolean a
+    Class member attributes (count = 1):
+    + Constant value attribute:
+    + Integer [0]
 
 Methods (count = 2):
   - Method:       <init>()V
     Access flags: 0x1
       = public WifiStateReceiver()
     Class member attributes (count = 1):
-    + Code attribute instructions (code length = 5, locals = 1, stack = 1):
+    + Code attribute instructions (code length = 10, locals = 1, stack = 2):
       [0] aload_0 v0
-      [1] invokespecial #11
+      [1] invokespecial #16
         + Methodref [android/content/BroadcastReceiver.<init> ()V]
-      [4] return
+      [4] aload_0 v0
+      [5] iconst_0
+      [6] putfield #13
+        + Fieldref [com/ak/wifissidwidget/WifiStateReceiver.a Z]
+      [9] return
       Code attribute exceptions (count = 0):
       Code attribute attributes (attribute count = 0):
   + Method:       onReceive(Landroid/content/Context;Landroid/content/Intent;)V
     Access flags: 0x1
       = public void onReceive(android.content.Context,android.content.Intent)
     Class member attributes (count = 1):
-    + Code attribute instructions (code length = 48, locals = 7, stack = 4):
-      [0] new #6
+    + Code attribute instructions (code length = 58, locals = 7, stack = 4):
+      [0] ldc #3
+        + String [android.intent.action.PACKAGE_REPLACED]
+      [2] aload_2 v2
+      [3] invokevirtual #19
+        + Methodref [android/content/Intent.getAction ()Ljava/lang/String;]
+      [6] invokevirtual #22
+        + Methodref [java/lang/String.equals (Ljava/lang/Object;)Z]
+      [9] pop
+      [10] new #9
         + Class [android/widget/RemoteViews]
-      [3] dup
-      [4] aload_1 v1
-      [5] invokevirtual #13
-        + Methodref [android/content/Context.getPackageName ()Ljava/lang/String;]
-      [8] ldc #1
-        + Integer [2130903040]
-      [10] invokespecial #14
-        + Methodref [android/widget/RemoteViews.<init> (Ljava/lang/String;I)V]
-      [13] astore_3 v3
+      [13] dup
       [14] aload_1 v1
-      [15] aload_3 v3
-      [16] invokestatic #15
+      [15] invokevirtual #18
+        + Methodref [android/content/Context.getPackageName ()Ljava/lang/String;]
+      [18] ldc #2
+        + Integer [2130903040]
+      [20] invokespecial #20
+        + Methodref [android/widget/RemoteViews.<init> (Ljava/lang/String;I)V]
+      [23] astore_3 v3
+      [24] aload_1 v1
+      [25] aload_3 v3
+      [26] invokestatic #21
         + Methodref [com/ak/wifissidwidget/WifiSSIDWidgetAppWidgetProvider.a (Landroid/content/Context;Landroid/widget/RemoteViews;)Ljava/lang/String;]
-      [19] astore v4
-      [21] new #4
+      [29] astore v4
+      [31] new #6
         + Class [android/content/ComponentName]
-      [24] dup
-      [25] aload_1 v1
-      [26] ldc #7
+      [34] dup
+      [35] aload_1 v1
+      [36] ldc #10
         + Class [com/ak/wifissidwidget/WifiSSIDWidgetAppWidgetProvider]
-      [28] invokespecial #12
+      [38] invokespecial #17
         + Methodref [android/content/ComponentName.<init> (Landroid/content/Context;Ljava/lang/Class;)V]
-      [31] astore v5
-      [33] aload_1 v1
-      [34] invokestatic #9
+      [41] astore v5
+      [43] aload_1 v1
+      [44] invokestatic #14
         + Methodref [android/appwidget/AppWidgetManager.getInstance (Landroid/content/Context;)Landroid/appwidget/AppWidgetManager;]
-      [37] astore v6
-      [39] aload v6
-      [41] aload v5
-      [43] aload_3 v3
-      [44] invokevirtual #10
+      [47] astore v6
+      [49] aload v6
+      [51] aload v5
+      [53] aload_3 v3
+      [54] invokevirtual #15
         + Methodref [android/appwidget/AppWidgetManager.updateAppWidget (Landroid/content/ComponentName;Landroid/widget/RemoteViews;)V]
-      [47] return
+      [57] return
       Code attribute exceptions (count = 0):
       Code attribute attributes (attribute count = 0):
 

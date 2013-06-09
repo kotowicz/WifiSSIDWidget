@@ -1255,4 +1255,5 @@ com.ak.wifissidwidget.WifiSSIDWidgetAppWidgetProvider -> com.ak.wifissidwidget.W
     java.lang.String get_SSID(android.content.Context) -> a
     java.lang.String updateSSIDstring(android.content.Context,android.widget.RemoteViews) -> a
 com.ak.wifissidwidget.WifiStateReceiver -> com.ak.wifissidwidget.WifiStateReceiver:
+    boolean DEBUG -> a
     void onReceive(android.content.Context,android.content.Intent) -> onReceive

@@ -12,7 +12,6 @@ import android.widget.RemoteViews;
 
 /* Things left TODO:
  *
- *  - reinitalize UI when 'PACKAGE_REPLACED' is broadcasted.
  *  - check maximum AP name length - scroll name if too long? 
  *  - better icon (store)
  *  
@@ -73,6 +72,13 @@ import android.widget.RemoteViews;
  *  
  *  Version 0.15.7
  *  - activated proguard -> app size reduced from 820KB to 236KB.
+ *  
+ *  Version 0.16.0
+ *  - check for "0x" and "0X" strings returned by WifiManger
+ *    see bug https://code.google.com/p/android/issues/detail?id=43336
+ *  
+ *  Version 0.16.5
+ *  - reinitialize widget when 'PACKAGE_REPLACED' is broadcasted.
  *  
  */
 

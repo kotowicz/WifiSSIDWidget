@@ -2,7 +2,7 @@
 
     <string name="app_name">WiFi SSID Widget</string>
     <string name="wifi_string_header">WiFi:</string>
-    <string name="wifi_not_initialized">initializing</string>    
+    <string name="wifi_not_initialized">initializing ...</string>    
     <string name="no_connection">disconnected</string>
     <string name="no_ssid">unknown ssid</string>
     <string name="no_ssid_hex_lower">0x</string>

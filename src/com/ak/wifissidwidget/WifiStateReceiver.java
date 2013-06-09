@@ -12,6 +12,7 @@ import android.widget.Toast;
 public class WifiStateReceiver extends BroadcastReceiver {
 	
 	private static final String LOG = "com.ak.wifissidwidget";
+	private final boolean DEBUG = false;
 
 	@Override
 	public void onReceive(Context context, Intent intent) {
@@ -22,6 +23,11 @@ public class WifiStateReceiver extends BroadcastReceiver {
 		// if ("android.intent.action.PACKAGE_REPLACED".equals(intent.getAction())) {
 		//	Log.v(LOG, "upgrading package");
 		//}
+		
+		// show Toast only in debug mode.
+		if (("android.intent.action.PACKAGE_REPLACED".equals(intent.getAction())) && DEBUG == true ) {
+			Toast.makeText(context, "WifiSSIDWidget was updated - restarting", Toast.LENGTH_SHORT).show();
+		}		
 		
 		RemoteViews remoteViews = new RemoteViews(context.getPackageName(), R.layout.main);
 
