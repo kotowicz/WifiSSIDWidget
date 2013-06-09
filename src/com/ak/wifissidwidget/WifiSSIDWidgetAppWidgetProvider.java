@@ -13,6 +13,7 @@ import android.widget.RemoteViews;
 /* Things left TODO:
  *
  *  - reinitalize UI when 'PACKAGE_REPLACED' is broadcasted.
+ *  - check maximum AP name length - scroll name if too long? 
  *  - better icon (store)
  *  
  *  DONE:
@@ -110,6 +111,8 @@ public class WifiSSIDWidgetAppWidgetProvider extends AppWidgetProvider {
 	public static String get_SSID(Context context) {
 		
 		String no_ssid = context.getString(R.string.no_ssid);
+		String no_ssid_hex_lower = context.getString(R.string.no_ssid_hex_lower);
+		String no_ssid_hex_upper = context.getString(R.string.no_ssid_hex_upper);
 		String ssid = "";
 
 		// try / finally here so that we don't crash in case wifiManager is unavailable.
@@ -123,11 +126,16 @@ public class WifiSSIDWidgetAppWidgetProvider extends AppWidgetProvider {
 			ssid = no_ssid;
 		}
 
-		// look for the 'no_ssid' string inside the 'ssid' string. DO not use '!=' for string comparison.
-		boolean contains = ssid.contains(no_ssid);
+		// look for the 'no_ssid' strings inside the 'ssid' string. 
+		// see bug https://code.google.com/p/android/issues/detail?id=43336
+		//
+		// DO not use '!=' for string comparison.
+		boolean contains1 = ssid.contains(no_ssid);
+		boolean contains2 = ssid.contains(no_ssid_hex_lower);
+		boolean contains3 = ssid.contains(no_ssid_hex_upper);
 
 		String text_to_show = context.getString(R.string.no_connection);
-		if ((ssid != null) && (contains == false)) {
+		if ((ssid != null) && (contains1 == false) && (contains2 == false) && (contains3 == false)) {
 			text_to_show = ssid;
 		}    	
 

@@ -73,6 +73,8 @@ com.ak.wifissidwidget.R$layout: int main
 com.ak.wifissidwidget.R$string: int app_name
 com.ak.wifissidwidget.R$string: int no_connection
 com.ak.wifissidwidget.R$string: int no_ssid
+com.ak.wifissidwidget.R$string: int no_ssid_hex_lower
+com.ak.wifissidwidget.R$string: int no_ssid_hex_upper
 com.ak.wifissidwidget.R$string: int wifi_not_initialized
 com.ak.wifissidwidget.R$string: int wifi_string_header
 com.ak.wifissidwidget.R$style: int AppBaseTheme

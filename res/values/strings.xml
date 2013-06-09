@@ -5,5 +5,7 @@
     <string name="wifi_not_initialized">initializing</string>    
     <string name="no_connection">disconnected</string>
     <string name="no_ssid">unknown ssid</string>
+    <string name="no_ssid_hex_lower">0x</string>
+    <string name="no_ssid_hex_upper">0X</string>
 
 </resources>

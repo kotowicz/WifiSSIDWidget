@@ -50200,9 +50200,11 @@ _____________________________________________________________________
 
 Interfaces (count = 0):
 
-Constant Pool (count = 97):
+Constant Pool (count = 99):
   + Integer [2131034115]
   + Integer [2131034116]
+  + Integer [2131034117]
+  + Integer [2131034118]
   + Integer [2131165185]
   + String []
   + String [^"|"$]
@@ -50307,7 +50309,7 @@ Methods (count = 4):
     Class member attributes (count = 1):
     + Code attribute instructions (code length = 5, locals = 1, stack = 1):
       [0] aload_0 v0
-      [1] invokespecial #21
+      [1] invokespecial #23
         + Methodref [android/appwidget/AppWidgetProvider.<init> ()V]
       [4] return
       Code attribute exceptions (count = 0):
@@ -50317,41 +50319,41 @@ Methods (count = 4):
       = public void onUpdate(android.content.Context,android.appwidget.AppWidgetManager,int[])
     Class member attributes (count = 1):
     + Code attribute instructions (code length = 53, locals = 7, stack = 4):
-      [0] new #10
+      [0] new #12
         + Class [android/content/ComponentName]
       [3] dup
       [4] aload_1 v1
-      [5] ldc #17
+      [5] ldc #19
         + Class [com/ak/wifissidwidget/WifiSSIDWidgetAppWidgetProvider]
-      [7] invokespecial #22
+      [7] invokespecial #24
         + Methodref [android/content/ComponentName.<init> (Landroid/content/Context;Ljava/lang/Class;)V]
       [10] astore v4
       [12] aload_2 v2
       [13] aload v4
-      [15] invokevirtual #20
+      [15] invokevirtual #22
         + Methodref [android/appwidget/AppWidgetManager.getAppWidgetIds (Landroid/content/ComponentName;)[I]
       [18] astore v5
-      [20] new #12
+      [20] new #14
         + Class [android/content/Intent]
       [23] dup
       [24] aload_1 v1
-      [25] invokevirtual #23
+      [25] invokevirtual #25
         + Methodref [android/content/Context.getApplicationContext ()Landroid/content/Context;]
-      [28] ldc #16
+      [28] ldc #18
         + Class [com/ak/wifissidwidget/UpdateWidgetService]
-      [30] invokespecial #27
+      [30] invokespecial #29
         + Methodref [android/content/Intent.<init> (Landroid/content/Context;Ljava/lang/Class;)V]
       [33] astore v6
       [35] aload v6
-      [37] ldc #6
+      [37] ldc #8
         + String [appWidgetIds]
       [39] aload v5
-      [41] invokevirtual #28
+      [41] invokevirtual #30
         + Methodref [android/content/Intent.putExtra (Ljava/lang/String;[I)Landroid/content/Intent;]
       [44] pop
       [45] aload_1 v1
       [46] aload v6
-      [48] invokevirtual #26
+      [48] invokevirtual #28
         + Methodref [android/content/Context.startService (Landroid/content/Intent;)Landroid/content/ComponentName;]
       [51] pop
       [52] return
@@ -50361,85 +50363,111 @@ Methods (count = 4):
     Access flags: 0x9
       = public static java.lang.String a(android.content.Context)
     Class member attributes (count = 1):
-    + Code attribute instructions (code length = 75, locals = 5, stack = 3):
+    + Code attribute instructions (code length = 128, locals = 9, stack = 3):
       [0] aload_0 v0
       [1] ldc #2
         + Integer [2131034116]
-      [3] invokevirtual #24
+      [3] invokevirtual #26
         + Methodref [android/content/Context.getString (I)Ljava/lang/String;]
       [6] astore_1 v1
-      [7] ldc #4
-        + String []
-      [9] astore_2 v2
-      [10] aload_0 v0
-      [11] ldc #7
-        + String [wifi]
-      [13] invokevirtual #25
-        + Methodref [android/content/Context.getSystemService (Ljava/lang/String;)Ljava/lang/Object;]
-      [16] checkcast #14
-        + Class [android/net/wifi/WifiManager]
-      [19] astore_3 v3
-      [20] aload_3 v3
-      [21] invokevirtual #30
-        + Methodref [android/net/wifi/WifiManager.getConnectionInfo ()Landroid/net/wifi/WifiInfo;]
-      [24] astore v4
-      [26] aload v4
-      [28] invokevirtual #29
-        + Methodref [android/net/wifi/WifiInfo.getSSID ()Ljava/lang/String;]
-      [31] astore_2 v2
-      [32] aload_2 v2
-      [33] ldc #5
-        + String [^"|"$]
-      [35] ldc #4
-        + String []
-      [37] invokevirtual #34
-        + Methodref [java/lang/String.replaceAll (Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;]
-      [40] astore_2 v2
-      [41] goto +6 (target=47)
-      [44] astore_3 v3
-      [45] aload_1 v1
-      [46] astore_2 v2
-      [47] aload_2 v2
-      [48] aload_1 v1
-      [49] invokevirtual #33
-        + Methodref [java/lang/String.contains (Ljava/lang/CharSequence;)Z]
-      [52] istore_3 v3
-      [53] aload_0 v0
-      [54] ldc #1
-        + Integer [2131034115]
-      [56] invokevirtual #24
+      [7] aload_0 v0
+      [8] ldc #3
+        + Integer [2131034117]
+      [10] invokevirtual #26
         + Methodref [android/content/Context.getString (I)Ljava/lang/String;]
+      [13] astore_2 v2
+      [14] aload_0 v0
+      [15] ldc #4
+        + Integer [2131034118]
+      [17] invokevirtual #26
+        + Methodref [android/content/Context.getString (I)Ljava/lang/String;]
+      [20] astore_3 v3
+      [21] ldc #6
+        + String []
+      [23] astore v4
+      [25] aload_0 v0
+      [26] ldc #9
+        + String [wifi]
+      [28] invokevirtual #27
+        + Methodref [android/content/Context.getSystemService (Ljava/lang/String;)Ljava/lang/Object;]
+      [31] checkcast #16
+        + Class [android/net/wifi/WifiManager]
+      [34] astore v5
+      [36] aload v5
+      [38] invokevirtual #32
+        + Methodref [android/net/wifi/WifiManager.getConnectionInfo ()Landroid/net/wifi/WifiInfo;]
+      [41] astore v6
+      [43] aload v6
+      [45] invokevirtual #31
+        + Methodref [android/net/wifi/WifiInfo.getSSID ()Ljava/lang/String;]
+      [48] astore v4
+      [50] aload v4
+      [52] ldc #7
+        + String [^"|"$]
+      [54] ldc #6
+        + String []
+      [56] invokevirtual #36
+        + Methodref [java/lang/String.replaceAll (Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;]
       [59] astore v4
-      [61] aload_2 v2
-      [62] ifnull +10 (target=72)
-      [65] iload_3 v3
-      [66] ifne +6 (target=72)
-      [69] aload_2 v2
-      [70] astore v4
-      [72] aload v4
-      [74] areturn
+      [61] goto +8 (target=69)
+      [64] astore v5
+      [66] aload_1 v1
+      [67] astore v4
+      [69] aload v4
+      [71] aload_1 v1
+      [72] invokevirtual #35
+        + Methodref [java/lang/String.contains (Ljava/lang/CharSequence;)Z]
+      [75] istore v5
+      [77] aload v4
+      [79] aload_2 v2
+      [80] invokevirtual #35
+        + Methodref [java/lang/String.contains (Ljava/lang/CharSequence;)Z]
+      [83] istore v6
+      [85] aload v4
+      [87] aload_3 v3
+      [88] invokevirtual #35
+        + Methodref [java/lang/String.contains (Ljava/lang/CharSequence;)Z]
+      [91] istore v7
+      [93] aload_0 v0
+      [94] ldc #1
+        + Integer [2131034115]
+      [96] invokevirtual #26
+        + Methodref [android/content/Context.getString (I)Ljava/lang/String;]
+      [99] astore v8
+      [101] aload v4
+      [103] ifnull +22 (target=125)
+      [106] iload v5
+      [108] ifne +17 (target=125)
+      [111] iload v6
+      [113] ifne +12 (target=125)
+      [116] iload v7
+      [118] ifne +7 (target=125)
+      [121] aload v4
+      [123] astore v8
+      [125] aload v8
+      [127] areturn
       Code attribute exceptions (count = 1):
-      - ExceptionInfo (10 -> 41: 44):
+      - ExceptionInfo (25 -> 61: 64):
       + Class [java/lang/Exception]
       Code attribute attributes (attribute count = 1):
       + Stack map table attribute (count = 3):
-        - [44] Var: [a:android/content/Context][a:java/lang/String][a:java/lang/String], Stack: [a:java/lang/Exception]
-        - [47] Var: ..., Stack: (empty)
-        - [72] Var: ...[i][a:java/lang/String], Stack: (empty)
+        - [64] Var: [a:android/content/Context][a:java/lang/String][a:java/lang/String][a:java/lang/String][a:java/lang/String], Stack: [a:java/lang/Exception]
+        - [69] Var: ..., Stack: (empty)
+        - [125] Var: [a:android/content/Context][a:java/lang/String][a:java/lang/String][a:java/lang/String][a:java/lang/String][i][i][i][a:java/lang/String], Stack: 
   + Method:       a(Landroid/content/Context;Landroid/widget/RemoteViews;)Ljava/lang/String;
     Access flags: 0x9
       = public static java.lang.String a(android.content.Context,android.widget.RemoteViews)
     Class member attributes (count = 1):
     + Code attribute instructions (code length = 14, locals = 3, stack = 3):
       [0] aload_0 v0
-      [1] invokestatic #32
+      [1] invokestatic #34
         + Methodref [com/ak/wifissidwidget/WifiSSIDWidgetAppWidgetProvider.a (Landroid/content/Context;)Ljava/lang/String;]
       [4] astore_2 v2
       [5] aload_1 v1
-      [6] ldc #3
+      [6] ldc #5
         + Integer [2131165185]
       [8] aload_2 v2
-      [9] invokevirtual #31
+      [9] invokevirtual #33
         + Methodref [android/widget/RemoteViews.setTextViewText (ILjava/lang/CharSequence;)V]
       [12] aload_2 v2
       [13] areturn
