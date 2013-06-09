@@ -1,2 +1,5 @@
 bin/
+build/
 *.xml~
+.gradle/1.6/taskArtifacts/fileHashes.bin
+*.bin

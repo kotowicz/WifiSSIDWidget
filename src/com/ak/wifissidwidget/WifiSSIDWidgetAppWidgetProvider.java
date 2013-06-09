@@ -83,6 +83,9 @@ import android.widget.RemoteViews;
  *
  *  Version 0.16.6
  *  - use small font for header string -> button fits into widget.
+ *
+  *  Version 0.16.7
+ *  - use layout_margin around button.
  *  
  */
 
