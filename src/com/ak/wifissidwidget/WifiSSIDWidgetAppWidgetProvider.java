@@ -14,6 +14,7 @@ import android.widget.RemoteViews;
  *
  *  - check maximum AP name length - scroll name if too long? 
  *  - better icon (store)
+ *  - rethink UI / widget design.
  *  
  *  DONE:
  *  - remove "" from SSID string on some android versions
@@ -79,6 +80,9 @@ import android.widget.RemoteViews;
  *  
  *  Version 0.16.5
  *  - reinitialize widget when 'PACKAGE_REPLACED' is broadcasted.
+ *
+ *  Version 0.16.6
+ *  - use small font for header string -> button fits into widget.
  *  
  */
 
