@@ -92,6 +92,9 @@ import android.widget.RemoteViews;
  *
  *  Version 0.16.9
  *  - remove stopSelf(); call
+ *
+ *  Version 0.17.0
+ *  - use IntentService instead of Service class. This might make the UI more responsive.
  */
 
 
