@@ -62,7 +62,8 @@ public class UpdateWidgetService extends Service {
 		// WifiSSIDWidgetAppWidgetProvider.sendUpdateIntent(this.getApplicationContext());		
 		
 		/* TODO: why are we calling stopSelf() here? Clarify! */
-		stopSelf();
+		// removed in version 0.16.9 - testing.
+		// stopSelf();
 		
 		return Service.START_STICKY;
 	}

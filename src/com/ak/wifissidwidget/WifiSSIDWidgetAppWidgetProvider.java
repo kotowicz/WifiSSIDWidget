@@ -89,6 +89,9 @@ import android.widget.RemoteViews;
  *  
  *  Version 0.16.8
  *  - set explicit button height - needed on Android 2.x systems.
+ *
+ *  Version 0.16.9
+ *  - remove stopSelf(); call
  */
 
 
