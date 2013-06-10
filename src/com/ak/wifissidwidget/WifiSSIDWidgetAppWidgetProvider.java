@@ -1,5 +1,6 @@
 package com.ak.wifissidwidget;
 
+import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
 import android.content.ComponentName;
@@ -9,9 +10,11 @@ import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 import android.util.Log;
 import android.widget.RemoteViews;
+import android.widget.Toast;
 
 /* Things left TODO:
  *
+ *  - check widget with hidden SSID; what will be shown? nothing?
  *  - check maximum AP name length - scroll name if too long? 
  *  - better icon (store)
  *  - rethink UI / widget design.
@@ -95,6 +98,10 @@ import android.widget.RemoteViews;
  *
  *  Version 0.17.0
  *  - use IntentService instead of Service class. This might make the UI more responsive.
+ *
+ *  Version 0.17.1 - release 52.
+ *  - fix "rotation kills onClickListener" bug.
+ *  - check for empty SSID string.st
  */
 
 
@@ -108,6 +115,9 @@ public class WifiSSIDWidgetAppWidgetProvider extends AppWidgetProvider {
 
 	@Override
 	public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
+
+        // TODO: remove
+        // Toast.makeText(context, "WifiSSIDWidgetAppWidgetProvider started", Toast.LENGTH_SHORT).show();
 
 		// remove logging message
 		// Log.i(LOG, "onUpdate() called");
@@ -156,9 +166,9 @@ public class WifiSSIDWidgetAppWidgetProvider extends AppWidgetProvider {
 		boolean contains3 = ssid.contains(no_ssid_hex_upper);
 
 		String text_to_show = context.getString(R.string.no_connection);
-		if ((ssid != null) && (contains1 == false) && (contains2 == false) && (contains3 == false)) {
+		if ((ssid != null && ssid.length() != 0) && (contains1 == false) && (contains2 == false) && (contains3 == false)) {
 			text_to_show = ssid;
-		}    	
+		}
 
 		return text_to_show;
 		
@@ -171,6 +181,23 @@ public class WifiSSIDWidgetAppWidgetProvider extends AppWidgetProvider {
 		
 		return ssid;
 	}
-	
+
+    public static RemoteViews updateUI(Context context) {
+
+        RemoteViews remoteViews = new RemoteViews(context.getPackageName(), R.layout.main);
+
+        // Register an onClickListener
+        Intent clickIntent = UpdateWidgetService.CreateWifiSettingsIntent(context.getApplicationContext());
+
+        PendingIntent pendingIntent = PendingIntent.getActivity(context.getApplicationContext(), 0, clickIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+        remoteViews.setOnClickPendingIntent(R.id.widget_textview, pendingIntent);
+
+			/* setup initial AP name value */
+        WifiSSIDWidgetAppWidgetProvider.updateSSIDstring(context.getApplicationContext(), remoteViews);
+
+        return remoteViews;
+
+    }
+
 } 
 

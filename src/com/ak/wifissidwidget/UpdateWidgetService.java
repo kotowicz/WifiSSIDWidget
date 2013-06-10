@@ -1,6 +1,7 @@
 package com.ak.wifissidwidget;
 
-import android.app.IntentService;
+import android.app.Service;
+import android.os.IBinder;
 import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
 import android.content.ComponentName;
@@ -8,10 +9,12 @@ import android.content.Context;
 import android.content.Intent;
 import android.widget.RemoteViews;
 import android.util.Log;
+import android.widget.Toast;
 
-public class UpdateWidgetService extends IntentService {
+public class UpdateWidgetService extends Service {
     private static final String LOG = "com.ak.wifissidwidget";
 
+    /*
     public UpdateWidgetService() {
         super("UpdateWidgetService");
     }
@@ -19,42 +22,21 @@ public class UpdateWidgetService extends IntentService {
     @Override
     protected void onHandleIntent(Intent intent) {
         updateUI(intent);
-    }
+    }*/
 
 
     private void updateUI(Intent intent) {
+
+        // TODO: remove
+        // Toast.makeText(this.getApplicationContext(), "updateUI() called", Toast.LENGTH_SHORT).show();
 
         AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(this.getApplicationContext());
 
         int[] allWidgetIds = intent.getIntArrayExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS);
 
-        // remove log entry.
-        // Log.i(LOG, "From Intent" + String.valueOf(allWidgetIds.length));
-
-        // remove log entry and unnecessary code
-		/*
-		ComponentName thisWidget = new ComponentName(getApplicationContext(),
-				WifiSSIDWidgetAppWidgetProvider.class);
-		int[] allWidgetIds2 = appWidgetManager.getAppWidgetIds(thisWidget);
-		// Log.i(LOG, "Direct" + String.valueOf(allWidgetIds2.length));
-		*/
-
         for (int widgetId : allWidgetIds) {
 
-            RemoteViews remoteViews = new RemoteViews(this
-                    .getApplicationContext().getPackageName(),
-                    R.layout.main);
-
-            // Register an onClickListener
-            Intent clickIntent = CreateWifiSettingsIntent(this.getApplicationContext());
-
-            PendingIntent pendingIntent = PendingIntent.getActivity(this.getApplicationContext(), 0, clickIntent,
-                    PendingIntent.FLAG_UPDATE_CURRENT);
-            remoteViews.setOnClickPendingIntent(R.id.widget_textview, pendingIntent);
-
-			/* setup initial AP name value */
-            WifiSSIDWidgetAppWidgetProvider.updateSSIDstring(this.getApplicationContext(), remoteViews);
-
+            RemoteViews remoteViews = WifiSSIDWidgetAppWidgetProvider.updateUI(this.getApplicationContext());
             appWidgetManager.updateAppWidget(widgetId, remoteViews);
 
 			/* remove log */
@@ -71,22 +53,27 @@ public class UpdateWidgetService extends IntentService {
         // stopSelf();
     }
 
-/*	Deprecated code in case we want to extend "Service" class again.
+	// Deprecated code in case we want to extend "Service" class again.
 
     @Override
 	public int onStartCommand(Intent intent, int flags, int startId) {
 
+        // TODO: remove
+        // Toast.makeText(this.getApplicationContext(), "onStartCommand started", Toast.LENGTH_SHORT).show();
+
         updateUI(intent);
-		
+        stopSelf();
+
+        // START_* values only indicate to the system what it should do if, for some reason, the system decides to kill the Service.
 		return Service.START_STICKY;
 	}
 
 	@Override
 	public IBinder onBind(Intent intent) {
 		return null;
-	}*/
+	}
 
-    public Intent CreateWifiSettingsIntent(Context context) {
+    public static Intent CreateWifiSettingsIntent(Context context) {
 
         final Intent intent = new Intent(Intent.ACTION_MAIN, null);
         final ComponentName cn = new ComponentName("com.android.settings", "com.android.settings.wifi.WifiSettings");

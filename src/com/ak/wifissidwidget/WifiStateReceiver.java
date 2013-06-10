@@ -24,22 +24,25 @@ public class WifiStateReceiver extends BroadcastReceiver {
         //	Log.v(LOG, "upgrading package");
         //}
 
-        RemoteViews remoteViews = new RemoteViews(context.getPackageName(), R.layout.main);
+        // TODO: remove
+        // Toast.makeText(context.getApplicationContext(), "onReceive in WifiStateReceiver() called", Toast.LENGTH_SHORT).show();
+
+        RemoteViews remoteViews = WifiSSIDWidgetAppWidgetProvider.updateUI(context);
 
         // show update Toast only in debug mode.
-        if (("android.intent.action.PACKAGE_REPLACED".equals(intent.getAction())) && DEBUG == true ) {
-            Toast.makeText(context, "WifiSSIDWidget was updated - restarting", Toast.LENGTH_SHORT).show();
+        if ("android.intent.action.PACKAGE_REPLACED".equals(intent.getAction())) {
+            if (DEBUG == true) {
+                Toast.makeText(context, "WifiSSIDWidget was updated - restarting", Toast.LENGTH_SHORT).show();
+            }
         }
 
-        // show current SSID Toast only in debug mode.
+        // show current SSID Toast only in debug mode because WIFI states do change quite frequently
         if (DEBUG == true) {
-		    /* update the AP name */
-            String ssid = WifiSSIDWidgetAppWidgetProvider.updateSSIDstring(context, remoteViews);
-		
-		    /* remove Toast because WIFI states do change quite frequently */
+            String ssid = WifiSSIDWidgetAppWidgetProvider.get_SSID(context);
             Toast.makeText(context, "WiFi - " + ssid, Toast.LENGTH_SHORT).show();
         }
 
+        // Push update for this widget to the home screen
         ComponentName this_widget = new ComponentName(context, WifiSSIDWidgetAppWidgetProvider.class);
         AppWidgetManager manager = AppWidgetManager.getInstance(context);
         manager.updateAppWidget(this_widget, remoteViews);
