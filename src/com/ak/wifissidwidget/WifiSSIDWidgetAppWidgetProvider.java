@@ -101,7 +101,10 @@ import android.widget.Toast;
  *
  *  Version 0.17.1 - release 52.
  *  - fix "rotation kills onClickListener" bug.
- *  - check for empty SSID string.st
+ *  - check for empty SSID string
+ *
+ *  Version 0.17.2 - release 53
+ *  - same as 0.17.1 but using IntentService instead of Service.
  */
 
 
@@ -178,7 +181,7 @@ public class WifiSSIDWidgetAppWidgetProvider extends AppWidgetProvider {
 		
 		String ssid = WifiSSIDWidgetAppWidgetProvider.get_SSID(context);
 		remoteViews.setTextViewText(R.id.widget_textview, ssid);
-		
+
 		return ssid;
 	}
 

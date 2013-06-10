@@ -1,20 +1,19 @@
 package com.ak.wifissidwidget;
 
-import android.app.Service;
-import android.os.IBinder;
-import android.app.PendingIntent;
+import android.app.IntentService;
+//import android.os.IBinder;
 import android.appwidget.AppWidgetManager;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.widget.RemoteViews;
+import android.app.PendingIntent;
 import android.util.Log;
 import android.widget.Toast;
 
-public class UpdateWidgetService extends Service {
+public class UpdateWidgetService extends IntentService {
     private static final String LOG = "com.ak.wifissidwidget";
 
-    /*
     public UpdateWidgetService() {
         super("UpdateWidgetService");
     }
@@ -22,7 +21,7 @@ public class UpdateWidgetService extends Service {
     @Override
     protected void onHandleIntent(Intent intent) {
         updateUI(intent);
-    }*/
+    }
 
 
     private void updateUI(Intent intent) {
@@ -53,7 +52,7 @@ public class UpdateWidgetService extends Service {
         // stopSelf();
     }
 
-	// Deprecated code in case we want to extend "Service" class again.
+	/* Deprecated code in case we want to extend "Service" class again.
 
     @Override
 	public int onStartCommand(Intent intent, int flags, int startId) {
@@ -71,7 +70,7 @@ public class UpdateWidgetService extends Service {
 	@Override
 	public IBinder onBind(Intent intent) {
 		return null;
-	}
+	}*/
 
     public static Intent CreateWifiSettingsIntent(Context context) {
 
