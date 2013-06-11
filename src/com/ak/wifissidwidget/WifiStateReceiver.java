@@ -12,6 +12,7 @@ import android.widget.Toast;
 public class WifiStateReceiver extends BroadcastReceiver {
 
     private static final String LOG = "com.ak.wifissidwidget";
+    // TODO: set DEBUG to false for productive apps.
     private final boolean DEBUG = false;
 
     @Override

@@ -6,6 +6,7 @@ import android.appwidget.AppWidgetProvider;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
@@ -108,7 +109,11 @@ import android.widget.Toast;
  *  - same as 0.17.1 but using IntentService instead of Service.
  *
  *  Version 0.17.3 - release 54
- *  - check explicitly whether Wifi is connected when extracting SSID. 
+ *  - check explicitly whether Wifi is connected when extracting SSID.
+ *
+ *  Version 0.17.4 - release 56
+ *  - add permission android.permission.ACCESS_NETWORK_STATE".
+ *  - use ConnectivityManager to check WiFi state.
  */
 
 
@@ -151,7 +156,7 @@ public class WifiSSIDWidgetAppWidgetProvider extends AppWidgetProvider {
         String no_ssid = context.getString(R.string.no_ssid);
         String no_ssid_hex_lower = context.getString(R.string.no_ssid_hex_lower);
         String no_ssid_hex_upper = context.getString(R.string.no_ssid_hex_upper);
-        String ssid = "";
+        String ssid = no_ssid;
 
         // default text to show in case of no connection.
         String text_to_show = context.getString(R.string.no_connection);
@@ -159,11 +164,17 @@ public class WifiSSIDWidgetAppWidgetProvider extends AppWidgetProvider {
         // try / finally here so that we don't crash in case wifiManager is unavailable.
         try {
 
+            // needs permission "android.permission.ACCESS_NETWORK_STATE"
+            ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+            // networkInfo might be null.
+            NetworkInfo networkInfo = cm.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
+
+            // wifiManager & wifiInfo might be null.
             WifiManager wifiManager = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
             WifiInfo wifiInfo = wifiManager.getConnectionInfo();
 
             // check if connected to WiFi.
-            if (WifiInfo.getDetailedStateOf(wifiInfo.getSupplicantState()) == NetworkInfo.DetailedState.CONNECTED) {
+            if (networkInfo != null && networkInfo.isConnected() == true) {
 
                 ssid = wifiInfo.getSSID();
                 // remove starting and ending '"' characters (if present)
@@ -183,7 +194,9 @@ public class WifiSSIDWidgetAppWidgetProvider extends AppWidgetProvider {
 
             }
         } catch (Exception e) {
-            ssid = no_ssid;
+            // nothing to do in exception case.
+            // TODO: remove me.
+            // Toast.makeText(context, "Something bad happened: " + e, Toast.LENGTH_SHORT).show();
         }
 
         return text_to_show;
