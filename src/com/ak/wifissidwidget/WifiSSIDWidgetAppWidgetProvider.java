@@ -6,6 +6,7 @@ import android.appwidget.AppWidgetProvider;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.net.NetworkInfo;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 import android.util.Log;
@@ -105,85 +106,97 @@ import android.widget.Toast;
  *
  *  Version 0.17.2 - release 53
  *  - same as 0.17.1 but using IntentService instead of Service.
+ *
+ *  Version 0.17.3 - release 54
+ *  - check explicitly whether Wifi is connected when extracting SSID. 
  */
 
 
 /* WifiSSIDWidgetAppWidgetProvider will start the 'UpdateWidgetService' service */
 public class WifiSSIDWidgetAppWidgetProvider extends AppWidgetProvider {
 
-	private static final String LOG = "com.ak.wifissidwidget";
-	/* custom intent action */
-	public static final String UPDATE_WIDGET = "com.ak.wifissidwidget.UPDATE_WIDGET";
+    private static final String LOG = "com.ak.wifissidwidget";
+    /* custom intent action */
+    public static final String UPDATE_WIDGET = "com.ak.wifissidwidget.UPDATE_WIDGET";
 
 
-	@Override
-	public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
+    @Override
+    public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
 
         // TODO: remove
         // Toast.makeText(context, "WifiSSIDWidgetAppWidgetProvider started", Toast.LENGTH_SHORT).show();
 
-		// remove logging message
-		// Log.i(LOG, "onUpdate() called");
-		
-		// Get all ids
-		ComponentName thisWidget = new ComponentName(context, WifiSSIDWidgetAppWidgetProvider.class);
-		int[] allWidgetIds = appWidgetManager.getAppWidgetIds(thisWidget);
+        // remove logging message
+        // Log.i(LOG, "onUpdate() called");
 
-		// Build the intent to call the service
-		Intent intent = new Intent(context.getApplicationContext(), UpdateWidgetService.class);
-		intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, allWidgetIds);
-		
-		// Update the widgets via the service
-		context.startService(intent);
-		
-		// remove logging message
-		// Log.i(LOG, "Service started.");		
-		
-	}
-	
-	
-	public static String get_SSID(Context context) {
-		
-		String no_ssid = context.getString(R.string.no_ssid);
-		String no_ssid_hex_lower = context.getString(R.string.no_ssid_hex_lower);
-		String no_ssid_hex_upper = context.getString(R.string.no_ssid_hex_upper);
-		String ssid = "";
+        // Get all ids
+        ComponentName thisWidget = new ComponentName(context, WifiSSIDWidgetAppWidgetProvider.class);
+        int[] allWidgetIds = appWidgetManager.getAppWidgetIds(thisWidget);
 
-		// try / finally here so that we don't crash in case wifiManager is unavailable.
-		try {
-			WifiManager wifiManager = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);			
-			WifiInfo wifiInfo = wifiManager.getConnectionInfo();
-			ssid = wifiInfo.getSSID();
-			// remove starting and ending '"' characters (if present)
-			ssid = ssid.replaceAll("^\"|\"$", "");				
-		} catch (Exception e) {
-			ssid = no_ssid;
-		}
+        // Build the intent to call the service
+        Intent intent = new Intent(context.getApplicationContext(), UpdateWidgetService.class);
+        intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, allWidgetIds);
 
-		// look for the 'no_ssid' strings inside the 'ssid' string. 
-		// see bug https://code.google.com/p/android/issues/detail?id=43336
-		//
-		// DO not use '!=' for string comparison.
-		boolean contains1 = ssid.contains(no_ssid);
-		boolean contains2 = ssid.contains(no_ssid_hex_lower);
-		boolean contains3 = ssid.contains(no_ssid_hex_upper);
+        // Update the widgets via the service
+        context.startService(intent);
 
-		String text_to_show = context.getString(R.string.no_connection);
-		if ((ssid != null && ssid.length() != 0) && (contains1 == false) && (contains2 == false) && (contains3 == false)) {
-			text_to_show = ssid;
-		}
+        // remove logging message
+        // Log.i(LOG, "Service started.");
 
-		return text_to_show;
-		
-	}	
-	
-	public static String updateSSIDstring(Context context, RemoteViews remoteViews){
-		
-		String ssid = WifiSSIDWidgetAppWidgetProvider.get_SSID(context);
-		remoteViews.setTextViewText(R.id.widget_textview, ssid);
+    }
 
-		return ssid;
-	}
+
+    public static String get_SSID(Context context) {
+
+        String no_ssid = context.getString(R.string.no_ssid);
+        String no_ssid_hex_lower = context.getString(R.string.no_ssid_hex_lower);
+        String no_ssid_hex_upper = context.getString(R.string.no_ssid_hex_upper);
+        String ssid = "";
+
+        // default text to show in case of no connection.
+        String text_to_show = context.getString(R.string.no_connection);
+
+        // try / finally here so that we don't crash in case wifiManager is unavailable.
+        try {
+
+            WifiManager wifiManager = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
+            WifiInfo wifiInfo = wifiManager.getConnectionInfo();
+
+            // check if connected to WiFi.
+            if (WifiInfo.getDetailedStateOf(wifiInfo.getSupplicantState()) == NetworkInfo.DetailedState.CONNECTED) {
+
+                ssid = wifiInfo.getSSID();
+                // remove starting and ending '"' characters (if present)
+                ssid = ssid.replaceAll("^\"|\"$", "");
+
+                // look for the 'no_ssid' strings inside the 'ssid' string.
+                // see bug https://code.google.com/p/android/issues/detail?id=43336
+                //
+                // DO not use '!=' for string comparison.
+                boolean contains1 = ssid.contains(no_ssid);
+                boolean contains2 = ssid.contains(no_ssid_hex_lower);
+                boolean contains3 = ssid.contains(no_ssid_hex_upper);
+
+                if ((ssid != null && ssid.length() != 0) && (contains1 == false) && (contains2 == false) && (contains3 == false)) {
+                    text_to_show = ssid;
+                }
+
+            }
+        } catch (Exception e) {
+            ssid = no_ssid;
+        }
+
+        return text_to_show;
+
+    }
+
+    public static String updateSSIDstring(Context context, RemoteViews remoteViews){
+
+        String ssid = WifiSSIDWidgetAppWidgetProvider.get_SSID(context);
+        remoteViews.setTextViewText(R.id.widget_textview, ssid);
+
+        return ssid;
+    }
 
     public static RemoteViews updateUI(Context context) {
 
@@ -195,7 +208,7 @@ public class WifiSSIDWidgetAppWidgetProvider extends AppWidgetProvider {
         PendingIntent pendingIntent = PendingIntent.getActivity(context.getApplicationContext(), 0, clickIntent, PendingIntent.FLAG_UPDATE_CURRENT);
         remoteViews.setOnClickPendingIntent(R.id.widget_textview, pendingIntent);
 
-			/* setup initial AP name value */
+        /* setup initial AP name value */
         WifiSSIDWidgetAppWidgetProvider.updateSSIDstring(context.getApplicationContext(), remoteViews);
 
         return remoteViews;
