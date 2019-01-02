@@ -114,6 +114,12 @@ import android.widget.Toast;
  *  Version 0.17.4 - release 56
  *  - add permission android.permission.ACCESS_NETWORK_STATE".
  *  - use ConnectivityManager to check WiFi state.
+ *
+ *  Version 0.18.0 - release 57
+ *  - add permission android.permission.ACCESS_COARSE_LOCATION
+ *      - needed for Android >= 8.0 to read out SSID
+ *  - update code to compile on android studio 3.2.1
+ *      - works with gradle 4.6 and gradle plugin 3.2.1
  */
 
 
