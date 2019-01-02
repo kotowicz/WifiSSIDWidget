@@ -149,7 +149,11 @@ public class WifiSSIDWidgetAppWidgetProvider extends AppWidgetProvider {
         intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, allWidgetIds);
 
         // Update the widgets via the service
-        context.startService(intent);
+        try {
+            context.startService(intent);
+        } catch (Exception e) {
+            // catch for >= OREO
+        }
 
         // remove logging message
         // Log.i(LOG, "Service started.");
