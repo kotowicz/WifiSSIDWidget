@@ -1,5 +1,6 @@
 package com.ak.wifissidwidget;
 
+import android.annotation.TargetApi;
 import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
@@ -13,6 +14,8 @@ import android.net.wifi.WifiManager;
 import android.util.Log;
 import android.widget.RemoteViews;
 import android.widget.Toast;
+import android.os.Build;
+
 
 /* Things left TODO:
  *
@@ -134,25 +137,34 @@ public class WifiSSIDWidgetAppWidgetProvider extends AppWidgetProvider {
     @Override
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
 
-        // TODO: remove
-        // Toast.makeText(context, "WifiSSIDWidgetAppWidgetProvider started", Toast.LENGTH_SHORT).show();
 
-        // remove logging message
-        // Log.i(LOG, "onUpdate() called");
+            // TODO: remove
+            // Toast.makeText(context, "WifiSSIDWidgetAppWidgetProvider started", Toast.LENGTH_SHORT).show();
 
-        // Get all ids
-        ComponentName thisWidget = new ComponentName(context, WifiSSIDWidgetAppWidgetProvider.class);
-        int[] allWidgetIds = appWidgetManager.getAppWidgetIds(thisWidget);
+            // remove logging message
+            // Log.i(LOG, "onUpdate() called");
 
-        // Build the intent to call the service
-        Intent intent = new Intent(context.getApplicationContext(), UpdateWidgetService.class);
-        intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, allWidgetIds);
+            // Get all ids
+            ComponentName thisWidget = new ComponentName(context, WifiSSIDWidgetAppWidgetProvider.class);
+            int[] allWidgetIds = appWidgetManager.getAppWidgetIds(thisWidget);
 
-        // Update the widgets via the service
-        context.startService(intent);
+            // Build the intent to call the service
+            Intent intent = new Intent(context.getApplicationContext(), UpdateWidgetService.class);
+            intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, allWidgetIds);
 
-        // remove logging message
-        // Log.i(LOG, "Service started.");
+            // Update the widget via the service
+        PendingIntent pendingIntent=PendingIntent.getBroadcast(context,0,intent,PendingIntent.FLAG_NO_CREATE);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O  && pendingIntent==null) {
+                // temp fix for "java.lang.IllegalStateException" on >= 8.0
+                context.startForegroundService(intent);
+            } else {
+                context.startService(intent);
+            }
+
+            // remove logging message
+            // Log.i(LOG, "Service started.");
+
 
     }
 

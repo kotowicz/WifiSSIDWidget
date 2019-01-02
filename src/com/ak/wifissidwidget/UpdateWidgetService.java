@@ -10,6 +10,11 @@ import android.widget.RemoteViews;
 import android.app.PendingIntent;
 import android.util.Log;
 import android.widget.Toast;
+import android.os.Build;
+import android.app.NotificationManager;
+import android.app.NotificationChannel;
+import android.app.Notification;
+
 
 public class UpdateWidgetService extends IntentService {
     private static final String LOG = "com.ak.wifissidwidget";
@@ -22,6 +27,26 @@ public class UpdateWidgetService extends IntentService {
     protected void onHandleIntent(Intent intent) {
         updateUI(intent);
     }
+
+
+    public static final String NOTIFICATION_CHANNEL_ID_SERVICE = "com.ak.wifissidwidget";
+    public static final String NOTIFICATION_CHANNEL_ID_INFO = "com.ak.wifissidwidget.update_info";
+
+/*    @Override
+    public void onCreate() {
+
+        super.onCreate();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            NotificationManager nm = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+            nm.createNotificationChannel(new NotificationChannel(NOTIFICATION_CHANNEL_ID_SERVICE, "App Service", NotificationManager.IMPORTANCE_DEFAULT));
+            nm.createNotificationChannel(new NotificationChannel(NOTIFICATION_CHANNEL_ID_INFO, "Download Info", NotificationManager.IMPORTANCE_DEFAULT));
+            startForeground(1, nm);
+        } else {
+            Notification notification = new Notification();
+            startForeground(1, notification);
+        }
+    }*/
+
 
 
     private void updateUI(Intent intent) {
