@@ -13,18 +13,31 @@ allprojects {
         google()
         jcenter()
     }
-}
 
+    tasks.withType(JavaCompile) {
+        options.compilerArgs << "-Xlint:unchecked" << "-Xlint:deprecation"
+    }
+
+}
 
 apply plugin: 'com.android.application'
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: '*.jar')
+    implementation fileTree(include: '*.jar', dir: 'libs')
+    implementation 'com.android.support:appcompat-v7:25.0.0'
 }
 
 android {
-    compileSdkVersion 26
-    buildToolsVersion "28.0.3"
+    compileSdkVersion 25
+    buildToolsVersion '28.0.3'
+
+    defaultConfig {
+        // Defines the minimum API level required to run the app.
+        minSdkVersion 14
+        // Specifies the API level used to test the app.
+        targetSdkVersion 25
+        multiDexEnabled false
+    }
 
     sourceSets {
         main {
@@ -49,18 +62,12 @@ android {
         debug.setRoot('build-types/debug')
         release.setRoot('build-types/release')
     }
-    defaultConfig {
-        // Defines the minimum API level required to run the app.
-        minSdkVersion 8
-        // Specifies the API level used to test the app.
-        targetSdkVersion 26
-    }
 
     lintOptions {
         checkReleaseBuilds false
         // Or, if you prefer, you can continue to check for errors in release builds,
         // but continue the build even when errors are found:
-        abortOnError false
+        abortOnError true
     }
 
 }

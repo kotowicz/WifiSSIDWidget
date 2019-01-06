@@ -13,6 +13,7 @@ import android.net.wifi.WifiManager;
 import android.util.Log;
 import android.widget.RemoteViews;
 import android.widget.Toast;
+import android.os.Build;
 
 /* Things left TODO:
  *
@@ -150,7 +151,11 @@ public class WifiSSIDWidgetAppWidgetProvider extends AppWidgetProvider {
 
         // Update the widgets via the service
         try {
-            context.startService(intent);
+            //if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            //    context.startForegroundService(intent);
+            //} else {
+                context.startService(intent);
+            //}
         } catch (Exception e) {
             // catch for >= OREO
         }

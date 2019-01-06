@@ -6,6 +6,7 @@ import android.appwidget.AppWidgetManager;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+//import android.support.v4.app.JobIntentService;
 import android.widget.RemoteViews;
 import android.app.PendingIntent;
 import android.util.Log;
@@ -14,9 +15,11 @@ import android.widget.Toast;
 public class UpdateWidgetService extends IntentService {
     private static final String LOG = "com.ak.wifissidwidget";
 
+
     public UpdateWidgetService() {
         super("UpdateWidgetService");
     }
+
 
     @Override
     protected void onHandleIntent(Intent intent) {
