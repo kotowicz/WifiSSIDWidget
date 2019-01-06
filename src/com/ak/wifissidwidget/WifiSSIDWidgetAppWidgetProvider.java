@@ -131,7 +131,6 @@ public class WifiSSIDWidgetAppWidgetProvider extends AppWidgetProvider {
     /* custom intent action */
     public static final String UPDATE_WIDGET = "com.ak.wifissidwidget.UPDATE_WIDGET";
 
-
     @Override
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
 
@@ -168,6 +167,9 @@ public class WifiSSIDWidgetAppWidgetProvider extends AppWidgetProvider {
 
     public static String get_SSID(Context context) {
 
+        // TODO: set DEBUG to false for productive apps.
+        final boolean DEBUG = false;
+
         String no_ssid = context.getString(R.string.no_ssid);
         String no_ssid_hex_lower = context.getString(R.string.no_ssid_hex_lower);
         String no_ssid_hex_upper = context.getString(R.string.no_ssid_hex_upper);
@@ -181,33 +183,62 @@ public class WifiSSIDWidgetAppWidgetProvider extends AppWidgetProvider {
 
             // needs permission "android.permission.ACCESS_NETWORK_STATE"
             ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
-            // networkInfo might be null.
-            NetworkInfo networkInfo = cm.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
 
-            // wifiManager & wifiInfo might be null.
-            WifiManager wifiManager = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
-            WifiInfo wifiInfo = wifiManager.getConnectionInfo();
+            // activeNetwork might be null.
+            NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
 
-            // check if connected to WiFi.
-            if (networkInfo != null && networkInfo.isConnected() == true) {
+            // connected to the internet
+            if (activeNetwork != null) {
 
-                ssid = wifiInfo.getSSID();
-                // remove starting and ending '"' characters (if present)
-                ssid = ssid.replaceAll("^\"|\"$", "");
-
-                // look for the 'no_ssid' strings inside the 'ssid' string.
-                // see bug https://code.google.com/p/android/issues/detail?id=43336
-                //
-                // DO not use '!=' for string comparison.
-                boolean contains1 = ssid.contains(no_ssid);
-                boolean contains2 = ssid.contains(no_ssid_hex_lower);
-                boolean contains3 = ssid.contains(no_ssid_hex_upper);
-
-                if ((ssid != null && ssid.length() != 0) && (contains1 == false) && (contains2 == false) && (contains3 == false)) {
-                    text_to_show = ssid;
+                if (DEBUG == true) {
+                    Toast.makeText(context.getApplicationContext(), "activeNetwork", Toast.LENGTH_SHORT).show();
                 }
 
+                // connected to wifi -- this check seems to fail quite frequently
+                // if (activeNetwork.getType() == ConnectivityManager.TYPE_WIFI) {
+
+                if (DEBUG == true) {
+                    Toast.makeText(context.getApplicationContext(), "WIFI", Toast.LENGTH_SHORT).show();
+                }
+
+                    if (activeNetwork.isConnectedOrConnecting()) {
+
+                        if (DEBUG == true) {
+                            Toast.makeText(context.getApplicationContext(), "is connecting", Toast.LENGTH_SHORT).show();
+                        }
+
+                        // wifiManager & wifiInfo might be null.
+                        WifiManager wifiManager = (WifiManager) context.getApplicationContext().getSystemService(Context.WIFI_SERVICE);
+                        WifiInfo wifiInfo = wifiManager.getConnectionInfo();
+
+                        // might take a while for wifiInfo to return something reasonable.
+                        if (wifiInfo != null) {
+
+                            ssid = wifiInfo.getSSID();
+                            // remove starting and ending '"' characters (if present)
+                            ssid = ssid.replaceAll("^\"|\"$", "");
+
+                            // look for the 'no_ssid' strings inside the 'ssid' string.
+                            // see bug https://code.google.com/p/android/issues/detail?id=43336
+                            //
+                            // DO not use '!=' for string comparison.
+                            boolean contains1 = ssid.contains(no_ssid);
+                            boolean contains2 = ssid.contains(no_ssid_hex_lower);
+                            boolean contains3 = ssid.contains(no_ssid_hex_upper);
+
+                            if ((ssid != null && ssid.length() != 0) && (contains1 == false) && (contains2 == false) && (contains3 == false)) {
+                                text_to_show = ssid;
+                            }
+
+                        }
+
+
+                    }
+
+                //}
+
             }
+
         } catch (Exception e) {
             // nothing to do in exception case.
             // TODO: remove me.

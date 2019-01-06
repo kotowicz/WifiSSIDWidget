@@ -26,7 +26,9 @@ public class WifiStateReceiver extends BroadcastReceiver {
         //}
 
         // TODO: remove
-        // Toast.makeText(context.getApplicationContext(), "onReceive in WifiStateReceiver() called", Toast.LENGTH_SHORT).show();
+        if (DEBUG == true) {
+            Toast.makeText(context.getApplicationContext(), "onReceive in WifiStateReceiver() called", Toast.LENGTH_SHORT).show();
+        }
 
         RemoteViews remoteViews = WifiSSIDWidgetAppWidgetProvider.updateUI(context);
 
