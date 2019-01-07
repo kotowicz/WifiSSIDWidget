@@ -25,6 +25,10 @@ public class WifiStateReceiver extends BroadcastReceiver {
         //	Log.v(LOG, "upgrading package");
         //}
 
+
+        Log.i(LOG, "WifiStateReceiver.onReceive() called");
+
+
         // TODO: remove
         if (DEBUG == true) {
             Toast.makeText(context.getApplicationContext(), "onReceive in WifiStateReceiver() called", Toast.LENGTH_SHORT).show();

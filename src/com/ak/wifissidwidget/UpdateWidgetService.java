@@ -11,19 +11,41 @@ import android.widget.RemoteViews;
 import android.app.PendingIntent;
 import android.util.Log;
 import android.widget.Toast;
+import android.support.v4.app.JobIntentService;
+import android.app.Notification;
 
-public class UpdateWidgetService extends IntentService {
+
+public class UpdateWidgetService extends JobIntentService {
     private static final String LOG = "com.ak.wifissidwidget";
 
+    public static final int JOB_ID = 1;
 
-    public UpdateWidgetService() {
-        super("UpdateWidgetService");
+    public static void enqueueWork(Context context, Intent work) {
+        enqueueWork(context, UpdateWidgetService.class, JOB_ID, work);
+        Log.i(LOG, "UpdateWidgetService.enqueueWork() called");
     }
 
 
+
+    public static void start(Context context) {
+        Intent starter = new Intent(context, UpdateWidgetService.class);
+        UpdateWidgetService.enqueueWork(context, starter);
+        Log.i(LOG, "UpdateWidgetService.start() called");
+    }
+
+
+
     @Override
-    protected void onHandleIntent(Intent intent) {
+    public void onCreate() {
+        super.onCreate();
+        Log.i(LOG, "UpdateWidgetService.onCreate() called");
+
+    }
+
+    @Override
+    protected void onHandleWork(Intent intent) {
         updateUI(intent);
+        Log.i(LOG, "UpdateWidgetService.onHandleWork() called");
     }
 
 
@@ -31,6 +53,9 @@ public class UpdateWidgetService extends IntentService {
 
         // TODO: remove
         // Toast.makeText(this.getApplicationContext(), "updateUI() called", Toast.LENGTH_SHORT).show();
+
+        Log.i(LOG, "UpdateWidgetService.updateUI() called");
+
 
         AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(this.getApplicationContext());
 

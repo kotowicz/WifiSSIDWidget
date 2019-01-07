@@ -138,7 +138,7 @@ public class WifiSSIDWidgetAppWidgetProvider extends AppWidgetProvider {
         // Toast.makeText(context, "WifiSSIDWidgetAppWidgetProvider started", Toast.LENGTH_SHORT).show();
 
         // remove logging message
-        // Log.i(LOG, "onUpdate() called");
+        Log.i(LOG, "WifiSSIDWidgetAppWidgetProvider.onUpdate() called");
 
         // Get all ids
         ComponentName thisWidget = new ComponentName(context, WifiSSIDWidgetAppWidgetProvider.class);
@@ -150,11 +150,13 @@ public class WifiSSIDWidgetAppWidgetProvider extends AppWidgetProvider {
 
         // Update the widgets via the service
         try {
-            //if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            //    context.startForegroundService(intent);
-            //} else {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                //UpdateWidgetService.enqueueWork(context, intent);
+                UpdateWidgetService.start(context.getApplicationContext());
+
+            } else {
                 context.startService(intent);
-            //}
+            }
         } catch (Exception e) {
             // catch for >= OREO
         }
@@ -177,6 +179,9 @@ public class WifiSSIDWidgetAppWidgetProvider extends AppWidgetProvider {
 
         // default text to show in case of no connection.
         String text_to_show = context.getString(R.string.no_connection);
+
+        Log.i(LOG, "WifiSSIDWidgetAppWidgetProvider.get_SSID() called");
+
 
         // try / finally here so that we don't crash in case wifiManager is unavailable.
         try {
@@ -269,6 +274,8 @@ public class WifiSSIDWidgetAppWidgetProvider extends AppWidgetProvider {
 
         /* setup initial AP name value */
         WifiSSIDWidgetAppWidgetProvider.updateSSIDstring(context.getApplicationContext(), remoteViews);
+
+        Log.i(LOG, "WifiSSIDWidgetAppWidgetProvider.updateUI() called");
 
         return remoteViews;
 
